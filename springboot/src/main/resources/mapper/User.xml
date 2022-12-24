@@ -8,4 +8,18 @@
         from person p, user u
         where p.email = u.email
     </select>
+
+    <select id="listByCondition" resultType="com.example.springboot.entity.User">
+        select *
+        from person p, user u
+        <where>
+            p.email = u.email
+            <if test="fname != null and fname != ''">
+                and fname like concat('%', #{ fname }, '%')
+            </if>
+            <if test="uid != null and uid != ''">
+                and uid like concat('%', #{ uid }, '%')
+            </if>
+        </where>
+    </select>
 </mapper>
