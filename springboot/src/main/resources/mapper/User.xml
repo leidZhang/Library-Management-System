@@ -3,6 +3,33 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.springboot.mapper.UserMapper">
+    <insert id="save">
+        insert into person(email, fname, minit, lname, username, province, city, street, phone)
+        values (#{ email }, #{ fname }, #{ minit }, #{ lname }, #{ username }, #{ province }, #{ city }, #{ street }, #{ phone });
+
+        insert into user(email, gender, age, uid, cTime, uTime)
+        values (#{ email }, #{ gender }, #{ age }, #{ uid }, #{ cTime }, #{ uTime })
+    </insert>
+
+    <update id="updateByEmail">
+        update person
+        set fname = #{fname}, minit = #{minit}, lname = #{lname}, username = #{username}, province = #{province}, city = #{city},
+            street = #{street}, phone = #{phone}
+        where email = #{email};
+
+        update user
+        set gender = #{gender}, age = #{age}, uid = #{uid}
+        where email = #{email};
+    </update>
+
+    <delete id="deleteByEmail">
+        delete from user
+        where email = #{email};
+
+        delete from person
+        where email = #{email}
+    </delete>
+
     <select id="list" resultType="com.example.springboot.entity.User">
         select *
         from person p, user u
@@ -14,12 +41,20 @@
         from person p, user u
         <where>
             p.email = u.email
-            <if test="fname != null and fname != ''">
-                and fname like concat('%', #{ fname }, '%')
+            <if test="email != null and email != ''">
+                and p.email like concat('%', #{ email }, '%')
             </if>
             <if test="uid != null and uid != ''">
                 and uid like concat('%', #{ uid }, '%')
             </if>
         </where>
+        order by cTime desc
+    </select>
+
+    <select id="getByEmail" resultType="com.example.springboot.entity.User">
+        select *
+        from person p, user u
+        where p.email = u.email and
+              p.email = #{ email }
     </select>
 </mapper>

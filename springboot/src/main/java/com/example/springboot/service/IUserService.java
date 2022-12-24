@@ -12,4 +12,11 @@ public interface IUserService {
 
     Object page(UserPageRequest userPageRequest);
 
+    void save(User user);
+
+    User getByEmail(String email);
+
+    void updateByEmail(User user);
+
+    void deleteByEmail(String email);
 }

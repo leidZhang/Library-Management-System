@@ -4,7 +4,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/pp0alm?serverTimezone=GMT-5
+    url: jdbc:mysql://localhost:3306/pp0alm?serverTimezone=GMT-5&allowMultiQueries=true # allow multi queries
     username: root
     password: password  # my password
 

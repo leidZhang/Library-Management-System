@@ -14,4 +14,12 @@ public interface UserMapper {
     List<User> list();
 
     List<User> listByCondition(UserPageRequest userPageRequest);
+
+    void save(User user);
+
+    User getByEmail(String email);
+
+    void updateByEmail(User user);
+
+    void deleteByEmail(String email);
 }

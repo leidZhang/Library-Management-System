@@ -18,7 +18,7 @@ const routes = [
         name: 'home',
         component: () => import('@/views/home/HomeView')
       },
-      // ===== user =====
+      // ===== user list =====
       {
         path: '/userList',
         name: 'userList',
@@ -26,6 +26,18 @@ const routes = [
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () => import(/* webpackChunkName: "about" */ '@/views/user/List')
+      },
+      // ===== add user =====
+      {
+        path: '/addUser',
+        name: 'addUser',
+        component: () => import('@/views/user/Add')
+      },
+      // ====== edit user =====
+      {
+        path: '/editUser',
+        name: 'editUser',
+        component: () => import('@/views/user/Edit')
       }
     ]
   },
