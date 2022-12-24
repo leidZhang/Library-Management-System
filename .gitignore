@@ -1,1 +1,3 @@
 /springboot/target/
+/vue/node_modules
+/.idea/
