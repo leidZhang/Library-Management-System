@@ -18,7 +18,7 @@
         where email = #{email};
 
         update user
-        set gender = #{gender}, age = #{age}, uid = #{uid}
+        set gender = #{gender}, age = #{age}, uid = #{uid}, uTime = #{uTime}
         where email = #{email};
     </update>
 

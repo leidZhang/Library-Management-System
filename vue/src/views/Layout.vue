@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- header -->
-    <div style="height: 80px; line-height: 80px; background-color: white; margin-bottom: 2px; display: flex">
+    <div style="height: 80px; line-height: 80px; background-color: white; width: 100%; margin-bottom: 2px; display: flex">
       <img src="@/assets/logo.png" alt="" style="width: 50px; height: 50px; position: relative; top: 15px; left: 10px">
       <span style="margin-left: 20px; font-size: 40px; font-family: Arial">LIBRARY MANAGEMENT SYSTEM</span>
     </div>
@@ -9,7 +9,7 @@
     <!-- side and main -->
     <div style="display: flex">
       <!-- side -->
-      <div style="width: 230px; min-height: calc(100vh - 82px); height: 200px; overflow: hidden; margin-right: 2px; background-color: white;">
+      <div style="min-width: 230px; min-height: calc(100vh - 82px); height: 200px; overflow: hidden; margin-right: 2px; background-color: white;">
         <el-menu :default-active="$route.path" :default-opens="['user']" router>
           <el-menu-item index="/home">
             <i class="el-icon-s-data"></i>
@@ -45,7 +45,7 @@
         </el-menu>
       </div>
       <!-- main -->
-      <div style="flex: 1; background-color: white">
+      <div style="flex: 1; background-color: white;">
         <router-view/>
       </div>
     </div>

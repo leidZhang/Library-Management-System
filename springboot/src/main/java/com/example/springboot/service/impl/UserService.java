@@ -47,6 +47,7 @@ public class UserService implements IUserService {
 
     @Override
     public void updateByEmail(User user) {
+        user.setUTime(new Date());
         userMapper.updateByEmail(user);
     }
 
