@@ -17,7 +17,7 @@
         <el-table-column prop="gender" label="Gender" width="80"></el-table-column>
         <el-table-column prop="age" label="Age" width="80"></el-table-column>
         <el-table-column prop="email" label="Email" width="150"></el-table-column>
-        <el-table-column prop="phone" label="Phone" width="100"></el-table-column>
+        <el-table-column prop="phone" label="Phone" width="110"></el-table-column>
         <el-table-column prop="province" label="Province/State" width="95"></el-table-column>
         <el-table-column prop="city" label="City" width="100"></el-table-column>
         <el-table-column prop="street" label="Street" width="150"></el-table-column>

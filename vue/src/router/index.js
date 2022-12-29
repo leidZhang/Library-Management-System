@@ -38,6 +38,24 @@ const routes = [
         path: '/editUser',
         name: 'editUser',
         component: () => import('@/views/user/Edit')
+      },
+      // ===== admin list =====
+      {
+        path: '/adminList',
+        name: 'adminList',
+        component: () => import('@/views/admin/List')
+      },
+      // ===== add admin =====
+      {
+        path: '/addAdmin',
+        name: 'addAdmin',
+        component: () => import('@/views/admin/Add')
+      },
+      // ===== edit admin =====
+      {
+        path: 'editAdmin',
+        name: 'editAdmin',
+        component: () => import('@/views/admin/Edit')
       }
     ]
   },
