@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <span>Hello</span>
+    <span>Hello Administrator</span>
   </div>
 </template>
 

@@ -1,7 +1,9 @@
 package com.example.springboot.controller;
 
 import com.example.springboot.common.Result;
+import com.example.springboot.controller.dto.LoginDTO;
 import com.example.springboot.controller.request.AdminPageRequest;
+import com.example.springboot.controller.request.LoginRequest;
 import com.example.springboot.entity.Admin;
 import com.example.springboot.service.IAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,11 @@ import java.util.List;
 public class AdminController {
     @Autowired
     IAdminService adminService;
+
+    @PostMapping("/login")
+    public Result login(@RequestBody LoginRequest request) {
+        return Result.success(adminService.login(request));
+    }
 
     @PostMapping("/save")
     public Result save(@RequestBody Admin admin) {

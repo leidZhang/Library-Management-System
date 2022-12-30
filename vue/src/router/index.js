@@ -6,21 +6,28 @@ import Layout from "@/views/Layout";
 Vue.use(VueRouter)
 
 const routes = [
-    // ===== layout =====
+  // ===== login =====
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('@/views/login/Login')
+  },
+  // ===== layout =====
   {
     path: '/',
     name: 'layout',
+    redirect: 'home',
     component: Layout,
     children: [
       // ===== homepage =====
       {
-        path: '/home',
+        path: 'home',
         name: 'home',
         component: () => import('@/views/home/HomeView')
       },
       // ===== user list =====
       {
-        path: '/userList',
+        path: 'userList',
         name: 'userList',
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
@@ -29,25 +36,25 @@ const routes = [
       },
       // ===== add user =====
       {
-        path: '/addUser',
+        path: 'addUser',
         name: 'addUser',
         component: () => import('@/views/user/Add')
       },
       // ====== edit user =====
       {
-        path: '/editUser',
+        path: 'editUser',
         name: 'editUser',
         component: () => import('@/views/user/Edit')
       },
       // ===== admin list =====
       {
-        path: '/adminList',
+        path: 'adminList',
         name: 'adminList',
         component: () => import('@/views/admin/List')
       },
       // ===== add admin =====
       {
-        path: '/addAdmin',
+        path: 'addAdmin',
         name: 'addAdmin',
         component: () => import('@/views/admin/Add')
       },
