@@ -1,5 +1,7 @@
 package com.example.springboot.service.impl;
 
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.crypto.SecureUtil;
 import com.example.springboot.controller.dto.LoginDTO;
 import com.example.springboot.controller.request.AdminPageRequest;
 import com.example.springboot.controller.request.LoginRequest;
@@ -15,11 +17,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Random;
 
 @Slf4j
 @Service
 public class AdminService implements IAdminService {
+    private static String DEFAULT_PASS = "000000";
+    private static String PASS_SALT = "random";
+
     @Autowired
     AdminMapper adminMapper;
 
@@ -37,8 +41,10 @@ public class AdminService implements IAdminService {
 
     @Override
     public void save(Admin admin) {
-        String code = String.valueOf(new Random().nextInt(899999) + 100000); // generate random code
-        admin.setPasswrd(code);
+        if(StrUtil.isBlank(admin.getPasswrd())) {
+            admin.setPasswrd(DEFAULT_PASS);
+        }
+        admin.setPasswrd(secPass(admin.getPasswrd())); // md5 encryption
         adminMapper.save(admin);
     }
 
@@ -49,6 +55,7 @@ public class AdminService implements IAdminService {
 
     @Override
     public LoginDTO login(LoginRequest request) {
+        request.setPassword(secPass(request.getPassword()));
         Admin admin = adminMapper.getByEmailAndPassword(request);
         if(admin == null) {
             throw new ServiceException("Wrong email or password");
@@ -68,4 +75,7 @@ public class AdminService implements IAdminService {
         adminMapper.updateByEmail(admin);
     }
 
+    private String secPass(String password) {
+        return SecureUtil.md5(password + PASS_SALT);
+    }
 }

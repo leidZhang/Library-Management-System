@@ -1,4 +1,6 @@
-import axios from 'axios'
+import axios from 'axios';
+import Cookies from "js-cookie";
+import router from "@/router";
 
 const request = axios.create({
     baseURL: 'http://localhost:9090',
@@ -7,7 +9,12 @@ const request = axios.create({
 
 request.interceptors.request.use(config => {
     config.headers['Content-Type'] = 'application/json;charset=utf-8';
-    // router.push('/login')
+
+    //const admin = Cookies.get('admin');
+    //if(!admin) {
+    //    router.push('/login')
+    //}
+
     return config
 }, error => {
     return Promise.reject(error)
