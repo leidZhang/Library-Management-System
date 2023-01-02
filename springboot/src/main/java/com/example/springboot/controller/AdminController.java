@@ -4,6 +4,7 @@ import com.example.springboot.common.Result;
 import com.example.springboot.controller.dto.LoginDTO;
 import com.example.springboot.controller.request.AdminPageRequest;
 import com.example.springboot.controller.request.LoginRequest;
+import com.example.springboot.controller.request.PasswordRequest;
 import com.example.springboot.entity.Admin;
 import com.example.springboot.service.IAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,18 @@ public class AdminController {
     @PutMapping("/update")
     public Result updateByEmail(@RequestBody Admin admin) {
         adminService.updateByEmail(admin);
+        return Result.success();
+    }
+
+    @PutMapping("/resetPass")
+    public Result resetPass(@RequestBody PasswordRequest request) {
+        adminService.resetPass(request);
+        return Result.success();
+    }
+
+    @PutMapping("/changePass")
+    public Result changePass(@RequestBody PasswordRequest request) {
+        adminService.changePass(request);
         return Result.success();
     }
 

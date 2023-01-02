@@ -4,31 +4,31 @@
 
     <div style="width: 60%">
       <el-form :inline="true" :model="form" :rules="rules" ref="ruleForm">
-        <el-form-item label="First Name: " style="margin-left: 2px">
+        <el-form-item label="First Name: " style="margin-left: 2px" prop="fname">
           <el-input v-model="form.fname" placeholder="Enter first name"></el-input>
         </el-form-item>
-        <el-form-item label="Middle: " style="margin-left: 2px">
+        <el-form-item label="Middle: " style="margin-left: 2px" prop="minit">
           <el-input v-model="form.minit" placeholder="Enter middle"></el-input>
         </el-form-item>
-        <el-form-item label="Last Name: " style="margin-left: 2px">
+        <el-form-item label="Last Name: " style="margin-left: 2px" prop="lname">
           <el-input  v-model="form.lname"  placeholder="Enter last name"></el-input>
         </el-form-item>
-        <el-form-item label="Email: " style="margin-left: 2px">
+        <el-form-item label="Email: " style="margin-left: 2px" prop="email">
           <el-input v-model="form.email" placeholder="Enter email" :disabled="true"></el-input>
         </el-form-item>
-        <el-form-item label="Phone: " style="margin-left: 2px">
+        <el-form-item label="Phone: " style="margin-left: 2px" prop="phone">
           <el-input v-model="form.phone" placeholder="Enter phone number"></el-input>
         </el-form-item>
-        <el-form-item label="Username: " style="margin-left: 2px">
+        <el-form-item label="Username: " style="margin-left: 2px" prop="username">
           <el-input v-model="form.username" placeholder="Enter username"></el-input>
         </el-form-item>
-        <el-form-item label="Province/State: " style="margin-left: 2px">
+        <el-form-item label="Province/State: " style="margin-left: 2px" prop="province">
           <el-input v-model="form.province" placeholder="Enter province/state"></el-input>
         </el-form-item>
-        <el-form-item label="City: " style="margin-left: 2px">
+        <el-form-item label="City: " style="margin-left: 2px" prop="city">
           <el-input v-model="form.city" placeholder="Enter city"></el-input>
         </el-form-item>
-        <el-form-item label="Street: " style="margin-left: 2px">
+        <el-form-item label="Street: " style="margin-left: 2px" prop="street">
           <el-input v-model="form.street" placeholder="Enter street"></el-input>
         </el-form-item>
       </el-form>

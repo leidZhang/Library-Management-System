@@ -13,9 +13,25 @@
 
     <update id="updateByEmail">
         update person
-        set fname = #{fname}, minit = #{minit}, lname = #{lname}, username = #{username}, province = #{province}, city = #{city},
-            street = #{street}, phone = #{phone}
-        where email = #{email};
+        set fname = #{ fname }, minit = #{ minit }, lname = #{ lname }, username = #{ username }, province = #{ province }, city = #{ city },
+            street = #{ street }, phone = #{ phone }
+        where email = #{ email };
+
+        update admin
+        set status = #{ status }
+        where email = #{ email }
+    </update>
+
+    <update id="changePass">
+        update admin
+        set passwrd = #{ newPassword }
+        where email = #{ email } and passwrd = #{ password }
+    </update>
+
+    <update id="resetPass">
+        update admin
+        set passwrd = #{ newPassword }
+        where email = #{ email }
     </update>
 
     <delete id="deleteByEmail">
@@ -37,12 +53,9 @@
 
     <select id="listByCondition" resultType="com.example.springboot.entity.Admin">
         select *
-        from person p
+        from person p, admin a
         <where>
-            p.email in (
-            select a.email
-            from admin a
-            )
+            p.email = a.email
             <if test="email != null and email != ''">
                 and p.email like concat('%', #{ email }, '%')
             </if>

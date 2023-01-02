@@ -13,10 +13,32 @@
           <span class="el-dropdown-link">
             Welcome {{ admin.username }}<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
-          <el-dropdown-menu slot="dropdown" style="margin-top: -15px; width: 120px; text-align: center">
+          <!-- dropdown -->
+          <el-dropdown-menu slot="dropdown" style="margin-top: -15px; width: 150px; text-align: left">
+            <el-dropdown-item><div @click="dialogFormVisible = true">change password</div></el-dropdown-item>
             <el-dropdown-item><div @click="logout">logout</div></el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
+        <!-- change password -->
+        <el-dialog style="text-align: center" :visible.sync="dialogFormVisible">
+          <div style="font-size: 30px; font-family: Arial; font-weight: bold">Change Password</div>
+          <el-form :model="form" :rules="rules" ref="ruleForm" style="margin-top: 2px; width: 80vh;">
+            <el-form-item label="Original Password: " :label-width="formLabelWidth" prop="password">
+              <el-input v-model="form.password" show-password autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="New Password: " :label-width="formLabelWidth" prop="newPassword">
+              <el-input v-model="form.newPassword" show-password autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="Comfirm New Password: " :label-width="formLabelWidth" prop="confirmPassword">
+              <el-input v-model="form.confirmPassword" show-password autocomplete="off"></el-input>
+            </el-form-item>
+          </el-form>
+          <!-- buttons -->
+          <div slot="footer" class="dialog-footer" style="text-align: center; margin-top: -60px">
+            <el-button type="primary" @click="changePass">Confirm</el-button>
+            <el-button type="warning" @click="cancelChange">Cancel</el-button>
+          </div>
+        </el-dialog>
       </div>
     </div>
 
@@ -70,12 +92,38 @@
 
 <script>
 import Cookies from "js-cookie";
+import request from "@/utils/request";
 
 export default {
   name: "Layout",
   data() {
+    const checkConfirm = (rule, value, callback) => {
+      if(!value) {
+        callback(new Error("Please enter new password again"))
+      }
+      if(value != this.form.newPassword) {
+        callback(new Error("Please enter the correct new password"))
+      }
+      callback()
+    }
+
     return {
-      admin: Cookies.get('admin') ? JSON.parse(Cookies.get('admin')): {}
+      admin: Cookies.get('admin') ? JSON.parse(Cookies.get('admin')): {},
+      dialogFormVisible: false,
+      formLabelWidth: '200px',
+      form: {},
+
+      rules: {
+        password: [{ required: true, message: "Original password cannot be empty", trigger: 'blur' }],
+        newPassword: [
+          { required: true, message: "New password cannot be empty", trigger: 'blur' },
+          { min: 6, max: 30, message: "Password length must be 6-30" }
+        ],
+        confirmPassword: [
+          { required: true, validator: checkConfirm, trigger: 'blur' },
+          { min: 6, max: 30, message: "Password length must be 6-30" }
+        ]
+      }
     }
   },
 
@@ -84,6 +132,30 @@ export default {
       // data removal is required
       Cookies.remove('admin')
       this.$router.push('/login')
+    },
+
+    cancelChange() {
+      this.dialogFormVisible = false
+      this.$refs['ruleForm'].resetFields()
+    },
+
+    changePass() {
+      this.$refs['ruleForm'].validate((valid) => {
+        if(valid) {
+          this.form.email = this.admin.email // get email
+          request.put('admin/changePass', this.form).then(res => {
+            if(res.code === '200') {
+              this.$notify("Updated")
+              this.$refs['ruleForm'].resetFields()
+              this.dialogFormVisible = false
+              // Cookies.remove('admin')
+              // this.$router.push('/login')
+            } else {
+              this.$notify(res.msg)
+            }
+          })
+        }
+      })
     }
   }
 }

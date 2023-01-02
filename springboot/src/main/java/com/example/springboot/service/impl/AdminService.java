@@ -5,6 +5,7 @@ import cn.hutool.crypto.SecureUtil;
 import com.example.springboot.controller.dto.LoginDTO;
 import com.example.springboot.controller.request.AdminPageRequest;
 import com.example.springboot.controller.request.LoginRequest;
+import com.example.springboot.controller.request.PasswordRequest;
 import com.example.springboot.entity.Admin;
 import com.example.springboot.exception.ServiceException;
 import com.example.springboot.mapper.AdminMapper;
@@ -60,9 +61,25 @@ public class AdminService implements IAdminService {
         if(admin == null) {
             throw new ServiceException("Wrong email or password");
         }
+        if(!admin.isStatus()) {
+            throw new ServiceException("This account is currently disabled, please contact administrator");
+        }
         LoginDTO loginDTO = new LoginDTO();
         BeanUtils.copyProperties(admin, loginDTO);
         return loginDTO;
+    }
+
+    @Override
+    public void changePass(PasswordRequest request) {
+        request.setPassword(secPass(request.getPassword()));
+        request.setNewPassword(secPass(request.getNewPassword()));
+        adminMapper.changePass(request);
+    }
+
+    @Override
+    public void resetPass(PasswordRequest request) {
+        request.setNewPassword(secPass(DEFAULT_PASS));
+        adminMapper.resetPass(request);
     }
 
     @Override
