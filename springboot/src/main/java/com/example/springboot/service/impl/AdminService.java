@@ -15,6 +15,7 @@ import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,7 +47,12 @@ public class AdminService implements IAdminService {
             admin.setPasswrd(DEFAULT_PASS);
         }
         admin.setPasswrd(secPass(admin.getPasswrd())); // md5 encryption
-        adminMapper.save(admin);
+        try {
+            adminMapper.save(admin);
+        } catch (DuplicateKeyException e) {
+            log.error("Insertion failed: Email address: {}", admin.getEmail());
+            throw new ServiceException("Duplicate email address");
+        }
     }
 
     @Override
@@ -61,8 +67,9 @@ public class AdminService implements IAdminService {
         if(admin == null) {
             throw new ServiceException("Wrong email or password");
         }
+        System.out.println(admin.isStatus());
         if(!admin.isStatus()) {
-            throw new ServiceException("This account is currently disabled, please contact administrator");
+            throw new ServiceException("This account is currently disabled, please contact the administrator");
         }
         LoginDTO loginDTO = new LoginDTO();
         BeanUtils.copyProperties(admin, loginDTO);

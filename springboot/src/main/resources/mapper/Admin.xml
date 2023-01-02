@@ -76,12 +76,8 @@
 
     <select id="getByEmailAndPassword" resultType="com.example.springboot.entity.Admin">
         select *
-        from person p
-        where p.email = (
-            select a.email
-            from admin a
-            where a.email = #{ email } and
-                  a.passwrd = #{ password }
-            )
+        from person p, admin a
+        where p.email = a.email and
+              a.email = #{ email } and a.passwrd = #{ password }
     </select>
 </mapper>

@@ -50,7 +50,6 @@ export default {
           request.post('admin/login', this.admin).then(res => {
             if(res.code === '200') {
               this.$notify.success("sign in successful")
-
               if(res.data !== null) {
                 Cookies.set('admin', JSON.stringify(res.data))
               }
