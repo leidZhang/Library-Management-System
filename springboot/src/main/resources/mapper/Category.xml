@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.mapper.CategoryMapper">
+    <delete id="deleteByName">
+        delete from category
+        where name = #{ name }
+    </delete>
+
+    <select id="getByName" resultType="com.example.springboot.entity.Category">
+        select *
+        from category
+        where name = #{ name }
+    </select>
+
+    <update id="updateByName">
+        update category
+        set name = #{ name }, remark = #{ remark }, uDate = #{ uDate }
+        where id = #{ id }
+    </update>
+
+    <insert id="save">
+        insert into category(name, remark, cDate, pid)
+        values (#{ name }, #{ remark}, #{ cDate }, #{ pid })
+    </insert>
+
+    <resultMap id="categoryMap" type="com.example.springboot.entity.Category">
+        <id column="id" property="id"></id>
+        <result column="name" property="name"></result>
+        <result column="remark" property="remark"></result>
+        <result column="cDate" property="cDate"></result>
+        <result column="uDate" property="uDate"></result>
+        <result column="pid" property="pid"></result>
+        <collection property="children" ofType="com.example.springboot.entity.Category" column="id" select="selectById"></collection>
+    </resultMap>
+    
+    <select id="selectById" resultType="com.example.springboot.entity.Category">
+        select *
+        from category
+        where pid = #{ id }
+    </select>
+
+    <select id="listByCondition" resultMap="categoryMap">
+        select *
+        from category
+        <where>
+            isnull(pid)
+            <if test="name != null and name != ''">
+                and name like concat('%', #{ name }, '%')
+            </if>
+        </where>
+        order by id desc
+    </select>
+
+    <select id="list" resultType="com.example.springboot.entity.Category">
+        select *
+        from category
+    </select>
+
+
+</mapper>

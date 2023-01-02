@@ -11,7 +11,7 @@
  Target Server Version : 80030 (8.0.30)
  File Encoding         : 65001
 
- Date: 01/01/2023 19:16:39
+ Date: 02/01/2023 18:43:47
 */
 
 SET NAMES utf8mb4;
@@ -33,8 +33,36 @@ CREATE TABLE `admin`  (
 -- Records of admin
 -- ----------------------------
 INSERT INTO `admin` VALUES ('admin02@libman.com', 'd4e01a749610b02ce7d27366a4008bfa', 1);
-INSERT INTO `admin` VALUES ('jasonliu88@libman.com', 'd4e01a749610b02ce7d27366a4008bfa', 0);
+INSERT INTO `admin` VALUES ('jasonliu88@libman.com', 'd4e01a749610b02ce7d27366a4008bfa', 1);
 INSERT INTO `admin` VALUES ('mlas028@libman.com', 'd4e01a749610b02ce7d27366a4008bfa', 1);
+
+-- ----------------------------
+-- Table structure for category
+-- ----------------------------
+DROP TABLE IF EXISTS `category`;
+CREATE TABLE `category`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `cDate` datetime NULL DEFAULT CURRENT_TIMESTAMP,
+  `uDate` datetime NULL DEFAULT NULL,
+  `pid` int NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of category
+-- ----------------------------
+INSERT INTO `category` VALUES (1, 'History', 'history', '2023-01-02 16:12:23', NULL, NULL);
+INSERT INTO `category` VALUES (2, 'Science', 'science', '2023-01-02 16:12:45', NULL, NULL);
+INSERT INTO `category` VALUES (3, 'Book Arts', 'book arts', '2023-01-02 16:12:57', '2023-01-02 18:35:33', NULL);
+INSERT INTO `category` VALUES (4, 'European History', 'european history', '2023-01-02 16:19:44', NULL, 1);
+INSERT INTO `category` VALUES (5, 'Asian History', 'asian history', '2023-01-02 16:20:09', NULL, 1);
+INSERT INTO `category` VALUES (7, 'Education', 'education', '2023-01-02 17:47:34', NULL, NULL);
+INSERT INTO `category` VALUES (8, 'Technology', 'technology', '2023-01-02 17:54:07', NULL, NULL);
+INSERT INTO `category` VALUES (9, 'Social Science', 'social science', '2023-01-02 18:13:36', NULL, 2);
+INSERT INTO `category` VALUES (10, 'Natural Science', 'natural science', '2023-01-02 18:14:41', NULL, 2);
+INSERT INTO `category` VALUES (11, 'Information Technology', 'information Technology', '2023-01-02 18:42:46', NULL, 8);
 
 -- ----------------------------
 -- Table structure for person

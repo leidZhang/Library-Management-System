@@ -63,7 +63,24 @@ const routes = [
         path: 'editAdmin',
         name: 'editAdmin',
         component: () => import('@/views/admin/Edit')
+      },
+      // ===== category =====
+      {
+        path: 'categoryList',
+        name: 'categoryList',
+        component: () => import('@/views/category/List')
+      },
+      {
+        path: 'addCategory',
+        name: 'addCategory',
+        component: () => import('@/views/category/Add')
+      },
+      {
+        path: 'editCategory',
+        name: 'editCategory',
+        component: () => import('@/views/category/Edit')
       }
+
     ]
   },
   // ===== 404 =====

@@ -67,7 +67,6 @@ public class AdminService implements IAdminService {
         if(admin == null) {
             throw new ServiceException("Wrong email or password");
         }
-        System.out.println(admin.isStatus());
         if(!admin.isStatus()) {
             throw new ServiceException("This account is currently disabled, please contact the administrator");
         }

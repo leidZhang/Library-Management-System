@@ -1,7 +1,6 @@
 package com.example.springboot.controller;
 
 import com.example.springboot.common.Result;
-import com.example.springboot.controller.dto.LoginDTO;
 import com.example.springboot.controller.request.AdminPageRequest;
 import com.example.springboot.controller.request.LoginRequest;
 import com.example.springboot.controller.request.PasswordRequest;
