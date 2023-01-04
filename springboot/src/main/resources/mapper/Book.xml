@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.mapper.BookMapper">
+    <delete id="deleteByISBN">
+        delete from book
+        where isbn = #{ isbn }
+    </delete>
+
+    <update id="updateByISBN">
+        update book
+        set name = #{name}, category = #{category}, description = #{description}, publish_date = #{publish_date}, author = #{author}, uDate = #{uDate}, cover = #{cover}
+        where isbn = #{isbn}
+    </update>
+
+    <insert id="save">
+        insert into book(isbn, name, description, publish_date, author, publisher, cDate, cover, category)
+        values (#{isbn}, #{name}, #{description}, #{publish_date}, #{author}, #{publisher}, #{cDate}, #{cover}, #{category})
+    </insert>
+
+    <select id="getByISBN" resultType="com.example.springboot.entity.Book">
+        select *
+        from book
+        where isbn = #{ isbn }
+    </select>
+
+    <select id="list" resultType="com.example.springboot.entity.Book">
+        select *
+        from book
+        order by cDate desc
+    </select>
+
+    <select id="listByCondition" resultType="com.example.springboot.entity.Book">
+        select *
+        from book
+        <where>
+            <if test="name != null and name != ''">
+                name like concat('%', #{ name }, '%') and
+            </if>
+            <if test="isbn != null and isbn != ''">
+                isbn like concat('%', #{ isbn }, '%')
+            </if>
+        </where>
+        order by cDate desc
+    </select>
+</mapper>

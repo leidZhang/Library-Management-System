@@ -57,7 +57,7 @@
 import request from "@/utils/request";
 
 export default {
-  name: "Add",
+  name: "Edit",
   data() {
     const checkAge = (rule, value, callback) => {
       if(!value) {

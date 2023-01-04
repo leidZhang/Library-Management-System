@@ -79,8 +79,23 @@ const routes = [
         path: 'editCategory',
         name: 'editCategory',
         component: () => import('@/views/category/Edit')
-      }
-
+      },
+      // ===== book =====
+      {
+        path: 'bookList',
+        name: 'bookList',
+        component: () => import('@/views/book/List')
+      },
+      {
+        path: 'addBook',
+        name: 'addBook',
+        component: () => import('@/views/book/Add')
+      },
+      {
+        path: 'editBook',
+        name: 'editBook',
+        component: () => import('@/views/book/Edit')
+      },
     ]
   },
   // ===== 404 =====

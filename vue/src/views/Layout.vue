@@ -71,13 +71,22 @@
             <el-menu-item index="/adminList">Admin List</el-menu-item>
           </el-submenu>
 
-          <el-submenu index="book">
+          <el-submenu index="category">
             <template slot="title">
               <i class="el-icon-s-fold"></i>
               <span style="font-family: Arial; font-size: 15px;">Categories</span>
             </template>
             <el-menu-item index="/addCategory">New Parent Category</el-menu-item>
             <el-menu-item index="/categoryList">Category List</el-menu-item>
+          </el-submenu>
+
+          <el-submenu index="book">
+            <template slot="title">
+              <i class="el-icon-collection"></i>
+              <span style="font-family: Arial; font-size: 15px;">Book Management</span>
+            </template>
+            <el-menu-item index="/addBook">Add New Book</el-menu-item>
+            <el-menu-item index="/BookList">Book List</el-menu-item>
           </el-submenu>
         </el-menu>
       </div>
