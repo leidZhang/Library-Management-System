@@ -16,7 +16,6 @@ public class CategoryController {
     @Autowired
     ICategoryService categoryService;
 
-
     @PutMapping("/update")
     public Result updateByName(@RequestBody Category category) {
         categoryService.updateByName(category);
@@ -41,9 +40,9 @@ public class CategoryController {
         return Result.success(category);
     }
 
-    @GetMapping("/list")
-    public Result list() {
-        List<Category> category = categoryService.list();
+    @GetMapping("/tree")
+    public Result tree() {
+        List<Category> category = categoryService.tree();
         return Result.success(category);
     }
 

@@ -11,7 +11,7 @@
  Target Server Version : 80030 (8.0.30)
  File Encoding         : 65001
 
- Date: 03/01/2023 21:35:17
+ Date: 04/01/2023 00:00:37
 */
 
 SET NAMES utf8mb4;
@@ -57,8 +57,9 @@ CREATE TABLE `book`  (
 -- ----------------------------
 -- Records of book
 -- ----------------------------
-INSERT INTO `book` VALUES ('0131103628', 'C Programming Langeage', '1', 'The authors present the complete guide to ANSI standard C language programming. Written by the developers of C, this new version helps readers keep up with the finalized ANSI standard for C while showing how to take advantage of C\'s rich set of operators, economy of expression, improved control flow, and data structures.', '1988-03-22', 'Brian W. Kernighan', 'Pearson', '2023-01-03 16:18:14', '2023-01-03 17:54:13', 'https://m.media-amazon.com/images/I/411ejyE8obL._SX377_BO1,204,203,200_.jpg');
-INSERT INTO `book` VALUES ('0133970779', 'Fundamentals of Database Systems', '2', 'This book introduces the fundamental concepts necessary for designing, using, and implementing database systems and database applications. Our presentation stresses the fundamentals of database modeling and design, the languages and models provided by the database management systems, and database system implementation techniques.', '2015-06-08', 'Ramez Elmasri', 'Pearson', '2023-01-03 16:06:46', '2023-01-03 18:09:19', 'https://m.media-amazon.com/images/I/51IBmkQUFuL._SX400_BO1,204,203,200_.jpg');
+INSERT INTO `book` VALUES ('0128203315', 'Computer Organization and Design RISC-V Edition: The Hardware Software Interface', 'Science > Computer Science', 'Computer Organization and Design RISC-V Edition: The Hardware Software Interface, Second Edition, the award-winning textbook from Patterson and Hennessy that is used by more than 40,000 students per year, continues to present the most comprehensive and readable introduction to this core computer science topic. ', '2020-12-31', ' David A. Patterson', 'Morgan Kaufmann', '2023-01-03 23:54:53', '2023-01-03 23:55:06', 'https://m.media-amazon.com/images/W/WEBP_402378-T2/images/I/51tRhoFUQ2L._SX405_BO1,204,203,200_.jpg');
+INSERT INTO `book` VALUES ('0131103628', 'C Programming Langeage', 'Science > Computer Science', 'Written by the developers of C, this new version helps readers keep up with the finalized ANSI standard for C while showing how to take advantage of C\'s rich set of operators, economy of expression, improved control flow, and data structures.', '1988-03-22', 'Brian W. Kernighan', 'Pearson', '2023-01-03 16:18:14', '2023-01-03 23:55:44', 'https://m.media-amazon.com/images/I/411ejyE8obL._SX377_BO1,204,203,200_.jpg');
+INSERT INTO `book` VALUES ('0133970779', 'Fundamentals of Database Systems', 'Science > Computer Science', 'This book introduces the fundamental concepts necessary for designing, using, and implementing database systems and database applications. Our presentation stresses the fundamentals of database modeling and design, the languages and models provided by the database management systems, and database system implementation techniques.', '2015-06-08', 'Ramez Elmasri', 'Pearson', '2023-01-03 16:06:46', '2023-01-03 23:26:21', 'https://m.media-amazon.com/images/I/51IBmkQUFuL._SX400_BO1,204,203,200_.jpg');
 
 -- ----------------------------
 -- Table structure for category
@@ -72,7 +73,7 @@ CREATE TABLE `category`  (
   `uDate` datetime NULL DEFAULT NULL,
   `pid` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of category

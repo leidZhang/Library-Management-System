@@ -55,7 +55,7 @@
         order by id desc
     </select>
 
-    <select id="list" resultType="com.example.springboot.entity.Category">
+    <select id="tree" resultType="com.example.springboot.entity.Category">
         select *
         from category
     </select>

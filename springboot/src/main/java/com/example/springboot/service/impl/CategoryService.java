@@ -1,5 +1,6 @@
 package com.example.springboot.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import com.example.springboot.controller.request.CategoryPageRequest;
 import com.example.springboot.entity.Category;
 import com.example.springboot.mapper.CategoryMapper;
@@ -10,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,8 +22,30 @@ public class CategoryService implements ICategoryService {
     CategoryMapper categoryMapper;
 
     @Override
-    public List<Category> list() {
-        return categoryMapper.list();
+    public List<Category> tree() {
+        List<Category> categories = categoryMapper.tree();
+        return helper(categories);
+    }
+
+    private List<Category> helper(List<Category> categories) {
+        // Create parent list
+        List<Category> pList = new ArrayList<>();
+        for(Category category: categories) {
+            if(category.getPid() == null) {
+                pList.add(category);
+            }
+        }
+        // Set children list
+        for(Category pCategory: pList) {
+            List<Category> children = new ArrayList<>();
+            for(Category category: categories) {
+                if(pCategory.getId() == category.getPid()) {
+                    children.add(category);
+                    pCategory.setChildren(children);
+                }
+            }
+        }
+        return pList;
     }
 
     @Override

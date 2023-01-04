@@ -13,8 +13,11 @@
         <el-form-item label="Name: " style="margin-left: 2px" prop="name">
           <el-input v-model="form.name" placeholder="Enter name"></el-input>
         </el-form-item>
-        <el-form-item label="Category: " style="margin-left: 2px" prop="category">
-          <el-input v-model="form.category" placeholder="Enter category"></el-input>
+        <el-form-item label="Category: " style="margin-left: 2px">
+          <el-cascader
+              :props="{value: 'name', label: 'name'}"
+              v-model="form.categories"
+              :options="categories"></el-cascader>
         </el-form-item>
         <el-form-item label="Author: " style="margin-left: 2px" prop="author">
           <el-input v-model="form.author" placeholder="Enter last name"></el-input>
@@ -52,6 +55,7 @@ export default {
   data() {
     return {
       form: {},
+      categories: [],
       rules: {
         // cannot be empty
         name: [{ required: true, message: "Please enter the book's name", trigger: 'blur' }],
@@ -67,6 +71,13 @@ export default {
     const isbn = this.$route.query.isbn
     request.get("/book/" + isbn).then(res => {
       this.form = res.data
+      if(this.form.category) {
+        this.form.categories = this.form.category.split(' > ')
+      }
+    })
+
+    request.get('category/tree').then(res => {
+      this.categories = res.data
     })
   },
 

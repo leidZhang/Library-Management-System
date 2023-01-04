@@ -8,7 +8,7 @@ import java.util.List;
 
 @Mapper
 public interface CategoryMapper {
-    List<Category> list();
+    List<Category> tree();
 
     List<Category> listByCondition(CategoryPageRequest request);
 

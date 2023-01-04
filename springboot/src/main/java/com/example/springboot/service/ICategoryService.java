@@ -6,7 +6,7 @@ import com.example.springboot.entity.Category;
 import java.util.List;
 
 public interface ICategoryService {
-    List<Category> list();
+    List<Category> tree();
 
     Object page(CategoryPageRequest request);
 
@@ -17,4 +17,5 @@ public interface ICategoryService {
     Category getByName(String name);
 
     void deleteByName(String name);
+
 }

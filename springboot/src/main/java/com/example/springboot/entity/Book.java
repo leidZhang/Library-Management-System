@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class Book {
@@ -19,4 +20,5 @@ public class Book {
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT-5")
     private Date uDate;
     private String cover; // store book cover img url
+    private List<String> categories;
 }

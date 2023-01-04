@@ -39,19 +39,32 @@ public class BookService implements IBookService {
 
     @Override
     public void save(Book book) {
-        Date date = new Date();
-        book.setCDate(date);
+        book.setCDate(new Date());
+        book.setCategory(listToString(book.getCategories()));
         mapper.save(book);
     }
 
     @Override
     public void updateByISBN(Book book) {
         book.setUDate(new Date());
+        book.setCategory(listToString(book.getCategories()));
         mapper.updateByISBN(book);
     }
 
     @Override
     public void deleteByISBN(String isbn) {
         mapper.deleteByISBN(isbn);
+    }
+
+    private String listToString(List<String> list) {
+        String str = "";
+
+        for(String s: list) {
+            str += s + " > ";
+        }
+        // substring returns a string value
+        str = str.substring(0, str.lastIndexOf(" > "));
+
+        return str;
     }
 }

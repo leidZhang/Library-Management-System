@@ -1,6 +1,6 @@
 <template>
   <div style="padding: 10px;">
-    <div style="font-size: 40px; font-family: Arial; margin-bottom: 5px">Edit Book</div>
+    <div style="font-size: 40px; font-family: Arial; margin-bottom: 5px">Add New Book</div>
     <div style="width: 60%">
       <!-- form area -->
       <el-form :inline="true" :model="form" :rules="rules" ref="ruleForm">
@@ -13,8 +13,11 @@
         <el-form-item label="Name: " style="margin-left: 2px" prop="name">
           <el-input v-model="form.name" placeholder="Enter name"></el-input>
         </el-form-item>
-        <el-form-item label="Category: " style="margin-left: 2px" prop="category">
-          <el-input v-model="form.category" placeholder="Enter category"></el-input>
+        <el-form-item label="Category: " style="margin-left: 2px">
+          <el-cascader
+              :props="{value: 'name', label: 'name'}"
+              v-model="form.categories"
+              :options="categories"></el-cascader>
         </el-form-item>
         <el-form-item label="Author: " style="margin-left: 2px" prop="author">
           <el-input v-model="form.author" placeholder="Enter last name"></el-input>
@@ -61,11 +64,12 @@ export default {
 
     return {
       form: {},
+      categories: [],
       rules: {
         // cannot be empty
         isbn: [{ required: true,  validator: checkISBN, trigger: 'blur' }],
         name: [{ required: true, message: "Please enter the book's name", trigger: 'blur' }],
-        category: [{ required: true, message: "Please enter the book's category", trigger: 'blur' }],
+        category: [{ required: true, message: "Please select the book's category", trigger: 'blur' }],
         author: [{ required: true, message: "Please enter the book's author", trigger: 'blur' }],
         publisher: [{ required: true, message: "Please enter the book's publisher", trigger: 'blur' }],
         publish_date: [{ required: true, message: "Please select a date", trigger: 'blur' }],
@@ -73,11 +77,16 @@ export default {
     }
   },
 
+  created() {
+    request.get('category/tree').then(res => {
+      this.categories = res.data
+    })
+  },
+
   methods: {
     save() {
       this.$refs['ruleForm'].validate((valid) => {
         if(valid) {
-          console.log(this.form)
           request.post('book/save', this.form).then(res => {
             if(res.code === '200') {
               this.$notify.success('Submitted')
