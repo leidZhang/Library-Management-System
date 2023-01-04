@@ -20,5 +20,6 @@ public class Book {
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT-5")
     private Date uDate;
     private String cover; // store book cover img url
+    private Integer credit;
     private List<String> categories;
 }

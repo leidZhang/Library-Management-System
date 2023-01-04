@@ -96,6 +96,22 @@ const routes = [
         name: 'editBook',
         component: () => import('@/views/book/Edit')
       },
+      // ===== borrow =====
+      {
+        path: 'borrowList',
+        name: 'borrowList',
+        component: () => import('@/views/borrow/List')
+      },
+      {
+        path: 'addBorrow',
+        name: 'addBorrow',
+        component: () => import('@/views/borrow/Add')
+      },
+      {
+        path: 'editBorrow',
+        name: 'editBorrow',
+        component: () => import('@/views/borrow/Edit')
+      },
     ]
   },
   // ===== 404 =====

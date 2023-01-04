@@ -11,16 +11,16 @@
     <div>
       <el-table :data="tableData" style="width: 100%" stripe>
         <el-table-column prop="uid" label="User ID" width="150"></el-table-column>
-        <el-table-column prop="username" label="User Name" width="100"></el-table-column>
+        <el-table-column prop="username" label="User Name" width="150"></el-table-column>
         <el-table-column prop="fname" label="First Name" width="100"></el-table-column>
         <el-table-column prop="lname" label="Last Name" width="100"></el-table-column>
         <el-table-column prop="gender" label="Gender" width="80"></el-table-column>
-        <el-table-column prop="age" label="Age" width="80"></el-table-column>
-        <el-table-column prop="email" label="Email" width="150"></el-table-column>
+        <el-table-column prop="age" label="Age" width="50"></el-table-column>
+        <el-table-column prop="email" label="Email" show-overflow-tooltip width="150"></el-table-column>
         <el-table-column prop="phone" label="Phone" width="110"></el-table-column>
         <el-table-column prop="province" label="Province/State" width="95"></el-table-column>
         <el-table-column prop="city" label="City" width="100"></el-table-column>
-        <el-table-column prop="street" label="Street" width="150"></el-table-column>
+        <el-table-column prop="street" label="Street" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="ctime" label="Create Date" width="120"></el-table-column>
         <el-table-column prop="utime" label="Update Date" width="120"></el-table-column>
         <el-table-column fixed="right" label="Operation" width="200">
@@ -34,8 +34,6 @@
             >
               <el-button style="margin-left: 2px;" slot="reference" type="danger">Delete</el-button>
             </el-popconfirm>
-
-
           </template>
         </el-table-column>
       </el-table>

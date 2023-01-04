@@ -10,13 +10,14 @@
 
     <update id="updateByISBN">
         update book
-        set name = #{name}, category = #{category}, description = #{description}, publish_date = #{publish_date}, author = #{author}, uDate = #{uDate}, cover = #{cover}
+        set name = #{name}, category = #{category}, description = #{description}, publish_date = #{publish_date},
+            author = #{author}, uDate = #{uDate}, cover = #{cover}, credit = #{credit}
         where isbn = #{isbn}
     </update>
 
     <insert id="save">
-        insert into book(isbn, name, description, publish_date, author, publisher, cDate, cover, category)
-        values (#{isbn}, #{name}, #{description}, #{publish_date}, #{author}, #{publisher}, #{cDate}, #{cover}, #{category})
+        insert into book(isbn, name, description, publish_date, author, publisher, cDate, cover, category, credit)
+        values (#{isbn}, #{name}, #{description}, #{publish_date}, #{author}, #{publisher}, #{cDate}, #{cover}, #{category}, #{credit})
     </insert>
 
     <select id="getByISBN" resultType="com.example.springboot.entity.Book">

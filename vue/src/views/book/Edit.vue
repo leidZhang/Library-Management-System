@@ -36,7 +36,9 @@
         <el-form-item id="cover" label="Cover url: " style="margin-left: 2px;" prop="cover">
           <el-input v-model="form.cover" placeholder="Enter cover url"></el-input>
         </el-form-item>
-
+        <el-form-item id="credit" label="Credit: " style="margin-left: 2px;" prop="credit">
+          <el-input v-model="form.credit" placeholder="Enter cover url"></el-input>
+        </el-form-item>
       </el-form>
       <!-- button area -->
       <div style="text-align: center">
@@ -53,6 +55,16 @@ export default {
   name: "Edit",
 
   data() {
+    const checkISBN = (rule, value, callback) => {
+      if(!value) {
+        callback(new Error('Please enter the book\'s ISBN'))
+      }
+      if (!/^[0-9]{10}$/.test(value)) {
+        callback(new Error('Illegal ISBN'));
+      }
+      callback()
+    }
+
     return {
       form: {},
       categories: [],
@@ -63,6 +75,9 @@ export default {
         author: [{ required: true, message: "Please enter the book's author", trigger: 'blur' }],
         publisher: [{ required: true, message: "Please enter the book's publisher", trigger: 'blur' }],
         publish_date: [{ required: true, message: "Please select a date", trigger: 'blur' }],
+        credit: [{ required: true, message: "Please enter the book's credit", trigger: 'blur' }],
+        // more restrictions
+        isbn: [{ required: true,  validator: checkISBN, trigger: 'blur' }],
       }
     }
   },

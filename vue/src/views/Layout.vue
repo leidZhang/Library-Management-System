@@ -52,7 +52,7 @@
             <i class="el-icon-s-data"></i>
             <span style="font-family: Arial; font-size: 15px;">Homepage</span>
           </el-menu-item>
-
+          <!-- users -->
           <el-submenu index="user">
             <template slot="title">
               <i class="el-icon-user"></i>
@@ -61,7 +61,7 @@
             <el-menu-item index="/addUser">Add New User</el-menu-item>
             <el-menu-item index="/userList">User List</el-menu-item>
           </el-submenu>
-
+          <!-- admins -->
           <el-submenu index="admin">
             <template slot="title">
               <i class="el-icon-user-solid"></i>
@@ -70,7 +70,7 @@
             <el-menu-item index="/addAdmin">Add New Admin</el-menu-item>
             <el-menu-item index="/adminList">Admin List</el-menu-item>
           </el-submenu>
-
+          <!-- category -->
           <el-submenu index="category">
             <template slot="title">
               <i class="el-icon-s-fold"></i>
@@ -79,7 +79,7 @@
             <el-menu-item index="/addCategory">New Parent Category</el-menu-item>
             <el-menu-item index="/categoryList">Category List</el-menu-item>
           </el-submenu>
-
+          <!-- book -->
           <el-submenu index="book">
             <template slot="title">
               <i class="el-icon-collection"></i>
@@ -87,6 +87,15 @@
             </template>
             <el-menu-item index="/addBook">Add New Book</el-menu-item>
             <el-menu-item index="/BookList">Book List</el-menu-item>
+          </el-submenu>
+          <!-- borrow -->
+          <el-submenu index="borrow">
+            <template slot="title">
+              <i class="el-icon-download"></i>
+            <span style="font-family: Arial; font-size: 15px;">Borrow Management</span>
+          </template>
+          <el-menu-item index="/addBorrow">New Borrow</el-menu-item>
+          <el-menu-item index="/BorrowList">Borrow List</el-menu-item>
           </el-submenu>
         </el-menu>
       </div>

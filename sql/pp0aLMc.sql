@@ -30,3 +30,11 @@ create table admin (
     primary key(email),
     foreign key(email) references person(email)
 ); 
+
+create table borrow (
+	isbn 		varchar(255)		not null,
+    email		varchar(255)		not null,
+    primary key(isbn, email),
+    foreign key(isbn) references book(isbn),
+    foreign key(email) references user(email)
+);
