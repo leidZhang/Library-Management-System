@@ -11,7 +11,7 @@
  Target Server Version : 80030 (8.0.30)
  File Encoding         : 65001
 
- Date: 04/01/2023 00:00:37
+ Date: 04/01/2023 13:55:34
 */
 
 SET NAMES utf8mb4;
@@ -51,15 +51,38 @@ CREATE TABLE `book`  (
   `cDate` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   `uDate` datetime NULL DEFAULT NULL,
   `cover` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `credit` int NULL DEFAULT NULL,
   PRIMARY KEY (`isbn`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of book
 -- ----------------------------
-INSERT INTO `book` VALUES ('0128203315', 'Computer Organization and Design RISC-V Edition: The Hardware Software Interface', 'Science > Computer Science', 'Computer Organization and Design RISC-V Edition: The Hardware Software Interface, Second Edition, the award-winning textbook from Patterson and Hennessy that is used by more than 40,000 students per year, continues to present the most comprehensive and readable introduction to this core computer science topic. ', '2020-12-31', ' David A. Patterson', 'Morgan Kaufmann', '2023-01-03 23:54:53', '2023-01-03 23:55:06', 'https://m.media-amazon.com/images/W/WEBP_402378-T2/images/I/51tRhoFUQ2L._SX405_BO1,204,203,200_.jpg');
-INSERT INTO `book` VALUES ('0131103628', 'C Programming Langeage', 'Science > Computer Science', 'Written by the developers of C, this new version helps readers keep up with the finalized ANSI standard for C while showing how to take advantage of C\'s rich set of operators, economy of expression, improved control flow, and data structures.', '1988-03-22', 'Brian W. Kernighan', 'Pearson', '2023-01-03 16:18:14', '2023-01-03 23:55:44', 'https://m.media-amazon.com/images/I/411ejyE8obL._SX377_BO1,204,203,200_.jpg');
-INSERT INTO `book` VALUES ('0133970779', 'Fundamentals of Database Systems', 'Science > Computer Science', 'This book introduces the fundamental concepts necessary for designing, using, and implementing database systems and database applications. Our presentation stresses the fundamentals of database modeling and design, the languages and models provided by the database management systems, and database system implementation techniques.', '2015-06-08', 'Ramez Elmasri', 'Pearson', '2023-01-03 16:06:46', '2023-01-03 23:26:21', 'https://m.media-amazon.com/images/I/51IBmkQUFuL._SX400_BO1,204,203,200_.jpg');
+INSERT INTO `book` VALUES ('0128203315', 'Computer Organization and Design RISC-V Edition: The Hardware Software Interface', 'Science > Computer Science', 'Computer Organization and Design RISC-V Edition: The Hardware Software Interface, Second Edition, the award-winning textbook from Patterson and Hennessy that is used by more than 40,000 students per year, continues to present the most comprehensive and readable introduction to this core computer science topic. ', '2020-12-31', ' David A. Patterson', 'Morgan Kaufmann', '2023-01-03 23:54:53', '2023-01-03 23:55:06', 'https://m.media-amazon.com/images/W/WEBP_402378-T2/images/I/51tRhoFUQ2L._SX405_BO1,204,203,200_.jpg', 10);
+INSERT INTO `book` VALUES ('0131103628', 'C Programming Langeage', 'Science > Computer Science', 'Written by the developers of C, this new version helps readers keep up with the finalized ANSI standard for C while showing how to take advantage of C\'s rich set of operators, economy of expression, improved control flow, and data structures.', '1988-03-22', 'Brian W. Kernighan', 'Pearson', '2023-01-03 16:18:14', '2023-01-03 23:55:44', 'https://m.media-amazon.com/images/I/411ejyE8obL._SX377_BO1,204,203,200_.jpg', 10);
+INSERT INTO `book` VALUES ('0133970779', 'Fundamentals of Database Systems', 'Science > Computer Science', 'This book introduces the fundamental concepts necessary for designing, using, and implementing database systems and database applications. Our presentation stresses the fundamentals of database modeling and design, the languages and models provided by the database management systems, and database system implementation techniques.', '2015-06-08', 'Ramez Elmasri', 'Pearson', '2023-01-03 16:06:46', '2023-01-04 13:52:38', 'https://m.media-amazon.com/images/I/51IBmkQUFuL._SX400_BO1,204,203,200_.jpg', 15);
+
+-- ----------------------------
+-- Table structure for borrow
+-- ----------------------------
+DROP TABLE IF EXISTS `borrow`;
+CREATE TABLE `borrow`  (
+  `isbn` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `cDate` datetime NULL DEFAULT CURRENT_TIMESTAMP,
+  `uDate` datetime NULL DEFAULT NULL,
+  PRIMARY KEY (`isbn`, `email`) USING BTREE,
+  INDEX `email`(`email` ASC) USING BTREE,
+  CONSTRAINT `borrow_ibfk_1` FOREIGN KEY (`isbn`) REFERENCES `book` (`isbn`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `borrow_ibfk_2` FOREIGN KEY (`email`) REFERENCES `user` (`email`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of borrow
+-- ----------------------------
+INSERT INTO `borrow` VALUES ('0128203315', 'spacestarfish@outlook.com', '2023-01-04 11:37:24', '2023-01-04 13:42:19');
+INSERT INTO `borrow` VALUES ('0131103628', 'fblorg@outlook.com', '2023-01-04 11:37:21', '2023-01-04 13:31:21');
+INSERT INTO `borrow` VALUES ('0133970779', 'kojitadokoro@gmail.com', '2023-01-04 13:40:46', '2023-01-04 13:41:38');
 
 -- ----------------------------
 -- Table structure for category
@@ -119,7 +142,7 @@ INSERT INTO `person` VALUES ('jasonliu88@libman.com', 'Jason', 'M', 'Liu', 'json
 INSERT INTO `person` VALUES ('jbs123@gmail.com', 'John', 'B', 'Smith', 'jbs123', 'TX', 'Houston', '731 Fondren', '4395210124');
 INSERT INTO `person` VALUES ('jen2687@gmail.com', 'Joyce', 'A', 'English', 'jen26687', 'TX', 'Houston', '5631 Dallas', '4598741256');
 INSERT INTO `person` VALUES ('jwallace2598@outlook.com', 'Jennifer', 'S', 'Wallace', 'jwallace85', 'TX', 'Ballaire', '291 Berry', '4632157894');
-INSERT INTO `person` VALUES ('kojitadokoro@gmail.com', 'Koji', 'M', 'Tadokoro', 'kojitada123', 'ON', 'Mississauga', '123 Upwood', '5632147845');
+INSERT INTO `person` VALUES ('kojitadokoro@gmail.com', 'Koji', 'M', 'Tadokoro', 'kojitada114514', 'ON', 'Mississauga', '123 Upwood', '4563281597');
 INSERT INTO `person` VALUES ('mlas028@libman.com', 'Mike', 'J', 'Laski', 'mlas028', 'NS', 'Halifax', '195 Centrewood', '4125637852');
 INSERT INTO `person` VALUES ('spacestarfish@outlook.com', 'Evil', 'S', 'Starfish', 'spacestarfish', 'NS', 'Halifax', '2333 Void', '4856321475');
 INSERT INTO `person` VALUES ('wf2887@outlook.com', 'Franklin', 'T', 'Wong', 'wf288c', 'TX', 'Houston', '638 Voss', '4381254789');
@@ -150,7 +173,7 @@ INSERT INTO `user` VALUES ('jande8654@outlook.com', 'Female', 23, '2022122456442
 INSERT INTO `user` VALUES ('jbs123@gmail.com', 'Male', 33, '202212241946340529', '2022-12-24 17:30:11', NULL);
 INSERT INTO `user` VALUES ('jen2687@gmail.com', 'Female', 25, '20221224723207108', '2022-12-24 17:36:14', NULL);
 INSERT INTO `user` VALUES ('jwallace2598@outlook.com', 'Female', 36, '20221224679361579', '2022-12-24 17:34:57', NULL);
-INSERT INTO `user` VALUES ('kojitadokoro@gmail.com', 'Male', 18, '20221224828600467', '2022-12-24 17:43:47', NULL);
+INSERT INTO `user` VALUES ('kojitadokoro@gmail.com', 'Male', 18, '20221224828600467', '2022-12-24 17:43:47', '2023-01-04 13:49:46');
 INSERT INTO `user` VALUES ('spacestarfish@outlook.com', 'Other', 17, '20221225752851968', '2022-12-25 16:35:37', '2022-12-30 16:43:25');
 INSERT INTO `user` VALUES ('wf2887@outlook.com', 'Male', 25, '202212241314368891', '2022-12-24 17:31:42', NULL);
 INSERT INTO `user` VALUES ('yoshida124@yahoo.com', 'Male', 33, '202212241065002931', '2022-12-24 17:41:54', NULL);
