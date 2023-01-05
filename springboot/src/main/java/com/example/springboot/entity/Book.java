@@ -21,5 +21,6 @@ public class Book {
     private Date uDate;
     private String cover; // store book cover img url
     private Integer credit;
+    private Integer number;
     private List<String> categories;
 }

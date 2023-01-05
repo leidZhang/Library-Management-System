@@ -19,4 +19,6 @@ public interface IUserService {
     void updateByEmail(User user);
 
     void deleteByEmail(String email);
+
+    void chargeUser(User user);
 }

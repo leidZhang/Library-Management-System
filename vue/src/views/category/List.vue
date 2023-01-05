@@ -18,7 +18,9 @@
           <el-button type="success" v-if="!scope.row.pid" @click="addChild(scope.row)">
             New Child Category
           </el-button>
-          <el-button type="primary" @click="$router.push('/editCategory?name=' + scope.row.name)">Edit</el-button>
+          <el-button type="primary" style="margin-left: 2px;" @click="$router.push('/editCategory?name=' + scope.row.name)">
+            Edit
+          </el-button>
           <!-- delete -->
           <el-popconfirm
               confirm-button-text='Yes'
@@ -147,6 +149,7 @@ export default {
               this.$notify.success('Submitted')
               this.$refs['ruleForm'].resetFields()
               this.dialogFormVisible = false
+              location.reload()
             } else {
               this.$notify.error(res.msg)
             }

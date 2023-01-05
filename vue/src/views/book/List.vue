@@ -25,7 +25,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="credit" label="Credit" width="85"></el-table-column>
-        <el-table-column prop="quantity" label="Quantity" width="85"></el-table-column>
+        <el-table-column prop="number" label="Number" width="85"></el-table-column>
         <el-table-column fixed="right" label="Operation" width="200">
           <template v-slot="scope">
             <el-button type="primary" @click="$router.push('/editBook?isbn=' + scope.row.isbn)">Edit</el-button>

@@ -42,8 +42,8 @@
     </select>
 
     <select id="getByEmailAndISBN" resultType="com.example.springboot.entity.Borrow">
-        select b1.*, b2.name, b2.credit, p.username, p.phone
-        from borrow b1, book b2, person p
-        where b1.email = p.email and b1.isbn = b2.isbn and b1.email = #{ email } and b1.isbn = #{ isbn }
+        select b1.*, b2.name, b2.credit, p.username, p.phone, u.aCredit
+        from borrow b1, book b2, person p, user u
+        where b1.email = p.email and b1.email = u.email and b1.isbn = b2.isbn and b1.email = #{ email } and b1.isbn = #{ isbn }
     </select>
 </mapper>

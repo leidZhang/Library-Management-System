@@ -1,26 +1,46 @@
 <template>
   <div style="padding: 10px;">
     <div style="font-size: 40px; font-family: Arial; margin-bottom: 5px">Add New Borrow</div>
-    <div style=" width: 60%">
+    <div style=" width: 80%">
       <!-- form area -->
       <el-form :inline="true" :model="form" :rules="rules" ref="ruleForm">
         <el-form-item label="ISBN: " style="margin-left: 2px" prop="isbn">
-          <el-input v-model="form.isbn" placeholder="Enter isbn"></el-input>
+          <el-select v-model="form.isbn" clearable filterable placeholder="Please select ISBN" @change="selectBook">
+            <el-option
+                v-for="item in books"
+                :key="item.isbn"
+                :label="item.isbn"
+                :value="item.isbn">
+            </el-option>
+          </el-select>
         </el-form-item>
-        <el-form-item label="Book Name: " style="margin-left: 2px" prop="name">
-          <el-input v-model="form.name" placeholder="Enter book's name"></el-input>
+        <el-form-item label="Book Name: " style="margin-left: 2px"  prop="name">
+          <el-input v-model="form.name" placeholder="Enter book's name" disabled></el-input>
         </el-form-item>
         <el-form-item id="credit" label="Credit: " style="margin-left: 2px;" prop="credit">
-          <el-input v-model="form.credit" placeholder="Enter cover url"></el-input>
+          <el-input v-model="form.credit" placeholder="Enter credit" disabled></el-input>
+        </el-form-item>
+        <el-form-item id="number" label="Number: " style="margin-left: 2px;" prop="number">
+          <el-input v-model="form.number" placeholder="Enter a number" disabled></el-input>
         </el-form-item>
         <el-form-item label="Email: " style="margin-left: 2px" prop="email">
-          <el-input v-model="form.email" placeholder="Enter email"></el-input>
+          <el-select v-model="form.email" clearable filterable placeholder="Please select an email address" @change="selectUser">
+            <el-option
+                v-for="item in users"
+                :key="item.email"
+                :label="item.email"
+                :value="item.email">
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="Phone: " style="margin-left: 2px" prop="phone">
-          <el-input v-model="form.phone" placeholder="Enter phone number"></el-input>
+          <el-input v-model="form.phone" placeholder="Enter phone number" disabled></el-input>
         </el-form-item>
         <el-form-item label="Username: " style="margin-left: 2px" prop="username">
-          <el-input v-model="form.username" placeholder="Enter username"></el-input>
+          <el-input v-model="form.username" placeholder="Enter username" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="Credit Left: " style="margin-left: 2px" prop="acredit">
+          <el-input v-model="form.acredit" placeholder="Enter credit value" disabled></el-input>
         </el-form-item>
       </el-form>
       <!-- button area -->
@@ -70,6 +90,8 @@ export default {
 
     return {
       form: {},
+      books: [],
+      users: [],
       // rules to check the input values
       rules: {
         username: [{ required: true, message: 'Please enter the username', trigger: 'blur' }],
@@ -81,6 +103,17 @@ export default {
         isbn: [{ required: true,  validator: checkISBN, trigger: 'blur' }],
       }
     }
+  },
+
+  created() {
+    // get book list
+    request.get('/book/list').then(res => {
+      this.books = res.data
+    })
+    // get user list
+    request.get('/user/list').then(res => {
+      this.users = res.data
+    })
   },
 
   methods: {
@@ -96,6 +129,27 @@ export default {
             }
           })
         }
+      })
+    },
+    // get data from book
+    selectBook() {
+      // console.log(this.form.isbn)
+      const book = this.books.find(v => v.isbn === this.form.isbn)
+      request.get("/book/" + book.isbn).then( res => {
+        this.form.name = res.data.name
+        this.form.credit = res.data.credit
+        this.form.number = res.data.number
+        this.$forceUpdate()
+      })
+    },
+    // get data from user
+    selectUser() {
+      const user = this.users.find(v => v.email === this.form.email)
+      request.get("/user/" + user.email).then(res => {
+        this.form.phone = res.data.phone
+        this.form.username = res.data.username
+        this.form.acredit = res.data.acredit
+        this.$forceUpdate()
       })
     },
   }

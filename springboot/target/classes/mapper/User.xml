@@ -7,8 +7,8 @@
         insert into person(email, fname, minit, lname, username, province, city, street, phone)
         values (#{ email }, #{ fname }, #{ minit }, #{ lname }, #{ username }, #{ province }, #{ city }, #{ street }, #{ phone });
 
-        insert into user(email, gender, age, uid, cTime, uTime)
-        values (#{ email }, #{ gender }, #{ age }, #{ uid }, #{ cTime }, #{ uTime })
+        insert into user(email, gender, age, uid, cTime, uTime, aCredit)
+        values (#{ email }, #{ gender }, #{ age }, #{ uid }, #{ cTime }, #{ uTime }, #{ aCredit })
     </insert>
 
     <update id="updateByEmail">
@@ -18,7 +18,7 @@
         where email = #{email};
 
         update user
-        set gender = #{gender}, age = #{age}, uid = #{uid}, uTime = #{uTime}
+        set gender = #{gender}, age = #{age}, uid = #{uid}, uTime = #{uTime}, aCredit = #{ aCredit }
         where email = #{email};
     </update>
 

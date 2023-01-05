@@ -22,6 +22,12 @@ public class UserController {
         return Result.success();
     }
 
+    @PostMapping("/charge")
+    public Result chargeUser(@RequestBody User user) {
+        userService.chargeUser(user);
+        return Result.success();
+    }
+
     @PutMapping("/update")
     public Result updateByEmail(@RequestBody User user) {
         userService.updateByEmail(user);

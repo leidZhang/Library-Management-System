@@ -10,15 +10,15 @@ public class Borrow {
     // data from book
     private String isbn; // primary key 2
     private String name; // book's name
-    private Integer credit;
+    private Integer credit; // book's credit
     // data from user
     private String email; // primary key 1
     private String username;
     private String phone;
+    private String aCredit;
     // own data
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT-5")
     private Date cDate;
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT-5")
     private Date uDate;
-
 }

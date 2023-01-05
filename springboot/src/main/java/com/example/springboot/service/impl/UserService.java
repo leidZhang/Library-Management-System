@@ -20,6 +20,7 @@ import java.util.List;
 @Slf4j
 @Service
 public class UserService implements IUserService {
+    private static final Integer DEFAULT_CREDIT = 200;
     @Autowired
     UserMapper userMapper;
 
@@ -41,6 +42,7 @@ public class UserService implements IUserService {
 
         user.setUid(DateUtil.format(date, "yyyyMMdd") + Math.abs(IdUtil.fastSimpleUUID().hashCode()));
         user.setCTime(date);
+        user.setACredit(DEFAULT_CREDIT);
         try {
             userMapper.save(user);
         } catch (DuplicateKeyException e) {
@@ -64,6 +66,17 @@ public class UserService implements IUserService {
     @Override
     public void deleteByEmail(String email) {
         userMapper.deleteByEmail(email);
+    }
+
+    @Override
+    public void chargeUser(User user) {
+        Integer charge = user.getCharge();
+        if(charge == null) {
+            return;
+        }
+        User cUser = userMapper.getByEmail(user.getEmail());
+        cUser.setACredit(cUser.getACredit() + charge);
+        userMapper.updateByEmail(cUser);
     }
 
 }

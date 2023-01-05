@@ -14,15 +14,14 @@
         <el-table-column prop="username" label="User Name" ></el-table-column>
         <el-table-column prop="phone" label="Phone" ></el-table-column>
         <el-table-column prop="isbn" label="ISBN" ></el-table-column>
-        <el-table-column prop="name" label="Name" show-overflow-tooltip ></el-table-column>
+        <el-table-column prop="name" label="Name" show-overflow-tooltip width="400"></el-table-column>
         <el-table-column prop="credit" label="Credit"></el-table-column>
         <el-table-column prop="cDate" label="Create Date" ></el-table-column>
-        <el-table-column prop="uDate" label="Update Date" ></el-table-column>
         <el-table-column fixed="right" label="Operation" >
           <template v-slot="scope">
-            <el-button type="primary" @click="$router.push('/editBorrow?email=' + scope.row.email + '&isbn=' + scope.row.isbn)">
+            <!--<el-button type="primary" disabled @click="$router.push('/editBorrow?email=' + scope.row.email + '&isbn=' + scope.row.isbn)">
               Edit
-            </el-button>
+            </el-button>-->
             <el-popconfirm
                 confirm-button-text='Yes'
                 cancel-button-text='No'

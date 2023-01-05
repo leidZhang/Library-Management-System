@@ -14,4 +14,6 @@ public class User extends Person {
     private Date cTime;
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT-5")
     private Date uTime;
+    private Integer aCredit; // credit in the user account
+    private Integer charge; // users charge up their account
 }
