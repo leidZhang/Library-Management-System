@@ -1,0 +1,2 @@
+1. drop constraint
+2. alter table foreign key follow with on delete cascade

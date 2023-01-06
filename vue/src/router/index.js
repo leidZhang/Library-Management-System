@@ -107,11 +107,6 @@ const routes = [
         name: 'addBorrow',
         component: () => import('@/views/borrow/Add')
       },
-      {
-        path: 'editBorrow',
-        name: 'editBorrow',
-        component: () => import('@/views/borrow/Edit')
-      },
       // ===== return =====
       {
         path: 'reternList',

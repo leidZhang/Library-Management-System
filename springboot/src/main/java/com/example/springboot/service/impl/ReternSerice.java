@@ -80,18 +80,23 @@ public class ReternSerice implements IReternService {
         // return some credit if the book is returned before the due date
         User user = userMapper.getByEmail(email);
         LocalDateTime now = LocalDateTime.now();
-        long realDuration = 0;
-        if(now.isBefore(borrow.getRDate())) { // refund
-            realDuration = now.until(borrow.getRDate(), ChronoUnit.DAYS) + 1;
-            Integer returnCredit = Math.toIntExact(book.getCredit() * realDuration);
-            user.setACredit(user.getACredit() + returnCredit); // original + payback
-        } else if(now.isAfter(borrow.getRDate())) {
-            realDuration = borrow.getRDate().until(now, ChronoUnit.DAYS);
-            Integer chargeCredit = 2 * Math.toIntExact(book.getCredit() * realDuration); // past due penalty
-            user.setACredit(user.getACredit() - chargeCredit); // original - penalty
-        }
-        if(user.getACredit() < 0) { // lock account if the score is negative
-            user.setStatus(false);
+        Integer returnCredit = 0;
+        long realDuration = borrow.getCDate().until(now, ChronoUnit.DAYS);
+        if(realDuration == 0) { // return on the same date of create date
+            user.setACredit(user.getACredit() + book.getCredit());
+        } else {
+            if(now.isBefore(borrow.getRDate())) { // refund
+                realDuration = now.until(borrow.getRDate(), ChronoUnit.DAYS);
+                returnCredit = Math.toIntExact(book.getCredit() * realDuration);
+                user.setACredit(user.getACredit() + returnCredit); // original + payback
+            } else if(now.isAfter(borrow.getRDate())) {
+                realDuration = borrow.getRDate().until(now, ChronoUnit.DAYS);
+                Integer chargeCredit = 2 * Math.toIntExact(book.getCredit() * realDuration); // past due penalty
+                user.setACredit(user.getACredit() - chargeCredit); // original - penalty
+            }
+            if(user.getACredit() < 0) { // lock account if the score is negative
+                user.setStatus(false);
+            }
         }
         userMapper.updateByEmail(user);
         // generate record id

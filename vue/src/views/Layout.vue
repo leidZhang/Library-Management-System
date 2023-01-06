@@ -46,7 +46,7 @@
       <!-- side -->
       <div style="min-width: 230px; min-height: calc(100vh - 82px); height: 200px; overflow: hidden; margin-right: 2px;
       background-color: white;">
-        <el-menu :default-active="$route.path" :default-opens="['user']" router>
+        <el-menu :unique-opened="true" :default-active="$route.path" :default-opens="['user']" router>
           <el-menu-item index="/home">
             <i class="el-icon-s-data"></i>
             <span style="font-family: Arial; font-size: 15px;">Homepage</span>
@@ -57,7 +57,7 @@
               <i class="el-icon-user"></i>
               <span style="font-family: Arial; font-size: 15px;">Users</span>
             </template>
-            <el-menu-item index="/addUser">Add New User</el-menu-item>
+            <el-menu-item index="/addUser">New User</el-menu-item>
             <el-menu-item index="/userList">User List</el-menu-item>
           </el-submenu>
           <!-- admins -->
@@ -66,7 +66,7 @@
               <i class="el-icon-user-solid"></i>
               <span style="font-family: Arial; font-size: 15px;">Administrators</span>
             </template>
-            <el-menu-item index="/addAdmin">Add New Admin</el-menu-item>
+            <el-menu-item index="/addAdmin">New Admin</el-menu-item>
             <el-menu-item index="/adminList">Admin List</el-menu-item>
           </el-submenu>
           <!-- category -->

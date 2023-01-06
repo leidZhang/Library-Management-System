@@ -3,6 +3,30 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.springboot.mapper.BorrowMapper">
+    <select id="countByCDate" resultType="com.example.springboot.mapper.po.BorrowReternCountPO">
+        select count(*) as count, date_format(cDate, "%Y-%m-%d") as date
+        from borrow
+        where
+        <choose>
+            <when test="range == 'week'">
+                cDate >= date_sub(now(), interval 1 week)
+            </when>
+            <when test="range == 'month'">
+                cDate >= date_sub(now(), interval 1 month)
+            </when>
+            <when test="range == 'month2'">
+                cDate >= date_sub(now(), interval 2 month)
+            </when>
+            <when test="range == 'month3'">
+                cDate >= date_sub(now(), interval 3 month)
+            </when>
+            <otherwise>
+                cDate > now()
+            </otherwise>
+        </choose>
+        group by date
+    </select>
+
     <select id="selectByEmailAndISBN" resultType="com.example.springboot.entity.Borrow">
         select *
         from borrow

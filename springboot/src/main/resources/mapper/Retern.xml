@@ -3,6 +3,30 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.springboot.mapper.ReternMapper">
+    <select id="countByADate" resultType="com.example.springboot.mapper.po.BorrowReternCountPO">
+        select count(*) as count, date_format(aDate, "%Y-%m-%d") as date
+        from reterns
+        where
+        <choose>
+            <when test="range == 'week'">
+                aDate >= date_sub(now(), interval 1 week)
+            </when>
+            <when test="range == 'month'">
+                aDate >= date_sub(now(), interval 1 month)
+            </when>
+            <when test="range == 'month2'">
+                aDate >= date_sub(now(), interval 2 month)
+            </when>
+            <when test="range == 'month3'">
+                aDate >= date_sub(now(), interval 3 month)
+            </when>
+            <otherwise>
+                aDate > now()
+            </otherwise>
+        </choose>
+        group by date
+    </select>
+
     <select id="selectByEmailAndISBN" resultType="com.example.springboot.entity.Retern">
         select *
         from reterns

@@ -22,16 +22,16 @@
         <el-table-column prop="rdate" label="Due Date" width="110" :formatter="dueDateFormat"></el-table-column>
         <el-table-column prop="notification" label="Notification">
           <template v-slot="scope1">
-            <el-tag type="danger" v-if="scope1.row.notification === 'expired'">
+            <el-tag type="danger" v-if="scope1.row.notification === 'past due'">
               {{ scope1.row.notification }}
             </el-tag>
-            <el-tag type="primary" v-if="scope1.row.notification === 'about expire'">
+            <el-tag type="primary" v-if="scope1.row.notification === 'almost due'">
               {{ scope1.row.notification }}
             </el-tag>
             <el-tag type="warning" v-if="scope1.row.notification === 'at the due date'">
               {{ scope1.row.notification }}
             </el-tag>
-            <el-tag type="success" v-if="scope1.row.notification === 'unexpired'">
+            <el-tag type="success" v-if="scope1.row.notification === 'before due'">
               {{ scope1.row.notification }}
             </el-tag>
           </template>

@@ -2,6 +2,7 @@ package com.example.springboot.mapper;
 
 import com.example.springboot.controller.request.BorrowPageRequest;
 import com.example.springboot.entity.Borrow;
+import com.example.springboot.mapper.po.BorrowReternCountPO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -22,4 +23,7 @@ public interface BorrowMapper {
 
 
     List<Borrow> selectByEmailAndISBN(String email, String isbn);
+
+
+    List<BorrowReternCountPO> countByCDate(String range);
 }

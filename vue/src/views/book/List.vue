@@ -14,7 +14,7 @@
         <el-table-column prop="name" label="Name" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="category" label="Category" width="130"></el-table-column>
         <el-table-column prop="author" label="Author" width="100"></el-table-column>
-        <el-table-column prop="publisher" label="Publisher" width="100"></el-table-column>
+        <el-table-column prop="publisher" label="Publisher" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="publish_date" label="Publish Date" width="120"></el-table-column>
         <el-table-column prop="description" label="Description" show-overflow-tooltip width="300"></el-table-column>
         <el-table-column prop="cDate" label="Create Date" width="110"></el-table-column>
@@ -119,8 +119,8 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .el-tooltip__popper {
-  max-width: 300px;
+  max-width: 400px; /* modify the width of the popper */
 }
 </style>

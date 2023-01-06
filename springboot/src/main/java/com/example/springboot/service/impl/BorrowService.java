@@ -49,14 +49,15 @@ public class BorrowService implements IBorrowService {
         for(Borrow borrow: borrows) {
             if(borrow.getBStatus().equals("Borrowed")) {
                 LocalDateTime returnDate = borrow.getRDate();
-                if(now.plusDays(1).equals(returnDate)) {
-                    borrow.setNotification("about expire");
-                } else if(now.equals(returnDate)) {
+                LocalDateTime notifyDate = now.plus(1, ChronoUnit.DAYS);
+                if(notifyDate.until(returnDate, ChronoUnit.DAYS) == 0) {
+                    borrow.setNotification("almost due");
+                } else if(now.until(returnDate, ChronoUnit.DAYS) == 0) {
                     borrow.setNotification("at the due date");
                 } else if(now.isAfter(returnDate)) {
-                    borrow.setNotification("expired");
+                    borrow.setNotification("past due");
                 } else {
-                    borrow.setNotification("unexpired");
+                    borrow.setNotification("before due");
                 }
                 mapper.updateByEmailAndISBN(borrow);
             }
