@@ -112,6 +112,12 @@ const routes = [
         name: 'editBorrow',
         component: () => import('@/views/borrow/Edit')
       },
+      // ===== return =====
+      {
+        path: 'reternList',
+        name: 'reternList',
+        component: () => import('@/views/retern/List')
+      }
     ]
   },
   // ===== 404 =====

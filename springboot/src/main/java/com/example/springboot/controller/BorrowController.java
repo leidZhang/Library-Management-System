@@ -3,7 +3,6 @@ package com.example.springboot.controller;
 import com.example.springboot.common.Result;
 import com.example.springboot.controller.request.BorrowPageRequest;
 import com.example.springboot.entity.Borrow;
-import com.example.springboot.entity.User;
 import com.example.springboot.service.IBorrowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -29,15 +28,15 @@ public class BorrowController {
         return Result.success();
     }
 
-    @DeleteMapping("/delete/{email}&{isbn}")
-    public Result deleteByEmailAndISBN(@PathVariable String email, @PathVariable String isbn) {
-        service.deleteByEmailAndISBN(email, isbn);
+    @DeleteMapping("/delete/{email}&{isbn}&{id}")
+    public Result deleteByEmailAndISBN(@PathVariable String email, @PathVariable String isbn, @PathVariable Integer id) {
+        service.deleteByEmailAndISBN(email, isbn, id);
         return Result.success();
     }
 
-    @GetMapping("/{email}&{isbn}")
-    public Result getByEmail(@PathVariable String email, @PathVariable String isbn) {
-        Borrow borrow = service.getByEmailAndISBN(email, isbn);
+    @GetMapping("/{email}&{isbn}&{id}")
+    public Result getByEmail(@PathVariable String email, @PathVariable String isbn, @PathVariable Integer id) {
+        Borrow borrow = service.getByEmailAndISBN(email, isbn, id);
         return Result.success(borrow);
     }
 

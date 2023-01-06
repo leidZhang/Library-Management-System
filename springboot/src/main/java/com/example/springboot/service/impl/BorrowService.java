@@ -13,16 +13,20 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Objects;
 
 @Slf4j
 @Service
 public class BorrowService implements IBorrowService {
+    private static final String DEFAULT_STATUS = "Borrowed";
     @Autowired
     BorrowMapper mapper;
 
@@ -41,6 +45,22 @@ public class BorrowService implements IBorrowService {
     public Object page(BorrowPageRequest request) {
         PageHelper.startPage(request.getPageNum(), request.getPageSize());
         List<Borrow> borrows = mapper.listByCondition(request);
+        LocalDateTime now = LocalDateTime.now();
+        for(Borrow borrow: borrows) {
+            if(borrow.getBStatus().equals("Borrowed")) {
+                LocalDateTime returnDate = borrow.getRDate();
+                if(now.plusDays(1).equals(returnDate)) {
+                    borrow.setNotification("about expire");
+                } else if(now.equals(returnDate)) {
+                    borrow.setNotification("at the due date");
+                } else if(now.isAfter(returnDate)) {
+                    borrow.setNotification("expired");
+                } else {
+                    borrow.setNotification("unexpired");
+                }
+                mapper.updateByEmailAndISBN(borrow);
+            }
+        }
         return new PageInfo<>(borrows);
     }
 
@@ -59,22 +79,37 @@ public class BorrowService implements IBorrowService {
         if(Objects.isNull(book)) {
             throw new ServiceException("Book does not exist");
         }
-        // 3. whether the user has enough credit
-        Integer user_credit = user.getACredit();
-        Integer book_credit = book.getCredit();
-        if(user_credit < book_credit) {
-            throw new ServiceException("Not enough credit on the account");
-        }
-        // 4. whether there is enough book
+        // 3. whether there is enough book
         if(book.getNumber() < 1) {
             throw new ServiceException("Insufficient quantity of the book");
         }
+        // 4. whether the user has enough credit
+        Integer userCredit = user.getACredit();
+        Integer needCredit = book.getCredit() * borrow.getDuration(); // book's credit * duration
+        if(userCredit < needCredit) {
+            throw new ServiceException("Not enough credit on the account");
+        }
         // 5. 1-4 passed, proceed to borrow operation
-        user.setACredit(user_credit - book_credit); // 5.1 billing
+        user.setACredit(userCredit - needCredit); // 5.1 billing
         book.setNumber(book.getNumber() - 1); // 5.1 update book number
         userMapper.updateByEmail(user); // 5.3 update user account
         bookMapper.updateByISBN(book); // 5.4 update book
-        borrow.setCDate(new Date()); // 5.5 generate borrow date
+        borrow.setCDate(LocalDateTime.now()); // 5.5 generate borrow date
+        borrow.setBStatus(DEFAULT_STATUS); // 5.6 set status
+        // 6. Set id
+        List<Borrow> records = mapper.selectByEmailAndISBN(email, isbn);
+        Integer max = 0;
+        if(!records.isEmpty()) {
+            for(Borrow record: records) {
+                Integer rId = record.getId();
+                if(rId > max) {
+                    max = rId;
+                }
+            }
+        }
+        borrow.setId(max + 1);
+        // set expected return date
+        borrow.setRDate(LocalDateTime.now().plus(borrow.getDuration(), ChronoUnit.DAYS));
         try {
             mapper.save(borrow);
         } catch (Exception e) {
@@ -83,23 +118,21 @@ public class BorrowService implements IBorrowService {
     }
 
     @Override
-    public Borrow getByEmailAndISBN(String email, String isbn) {
-        return mapper.getByEmailAndISBN(email, isbn);
+    public Borrow getByEmailAndISBN(String email, String isbn, Integer id) {
+        return mapper.getByEmailAndISBN(email, isbn, id);
     }
 
     @Override
     public void updateByEmailAndISBN(Borrow borrow) {
-        borrow.setUDate(new Date());
         mapper.updateByEmailAndISBN(borrow);
     }
 
     @Override
-    public void deleteByEmailAndISBN(String email, String isbn) {
+    public void deleteByEmailAndISBN(String email, String isbn, Integer id) {
         try {
-            mapper.deleteByEmailAndISBN(email, isbn);
+            mapper.deleteByEmailAndISBN(email, isbn, id);
         } catch (Exception e) {
             throw new ServiceException("Deletion failed, Please contact the administrator");
         }
-
     }
 }

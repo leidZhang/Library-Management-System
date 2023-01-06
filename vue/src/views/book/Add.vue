@@ -33,8 +33,8 @@
               placeholder="Select a date">
           </el-date-picker>
         </el-form-item>
-        <el-form-item id="credit" label="Credit: " style="margin-left: 2px;" prop="credit">
-          <el-input v-model="form.credit" placeholder="Enter cover url"></el-input>
+        <el-form-item id="credit" label="Score: " style="margin-left: 2px;" prop="credit">
+          <el-input v-model="form.credit" placeholder="Enter score value"></el-input>
         </el-form-item>
         <el-form-item id="cover" label="Cover url: " style="margin-left: 2px;" prop="cover">
           <el-input v-model="form.cover" placeholder="Enter cover url"></el-input>

@@ -1,4 +1,5 @@
 <template>
+  <!-- currently dumped -->
   <div style="padding: 10px;">
     <div style="font-size: 40px; font-family: Arial; margin-bottom: 5px">Edit Borrow</div>
     <div style=" width: 80%">

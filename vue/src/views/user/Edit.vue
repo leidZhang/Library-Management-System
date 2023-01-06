@@ -16,11 +16,14 @@
         <el-form-item label="Email: " style="margin-left: 2px">
           <el-input v-model="form.email" placeholder="Enter email" :disabled="true"></el-input>
         </el-form-item>
-        <el-form-item label="Phone: " style="margin-left: 2px">
-          <el-input v-model="form.phone" placeholder="Enter phone number"></el-input>
+        <el-form-item label="User ID: " style="margin-left: 2px">
+          <el-input v-model="form.uid" placeholder="-- Cannot be changed --" :disabled="true"></el-input>
         </el-form-item>
         <el-form-item label="Username: " style="margin-left: 2px">
           <el-input v-model="form.username" placeholder="Enter username"></el-input>
+        </el-form-item>
+        <el-form-item label="Phone: " style="margin-left: 2px">
+          <el-input v-model="form.phone" placeholder="Enter phone number"></el-input>
         </el-form-item>
         <el-form-item label="Age: " style="margin-left: 2px">
           <el-input v-model="form.age" placeholder="Enter age"></el-input>

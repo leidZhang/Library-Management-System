@@ -14,9 +14,12 @@ public interface BorrowMapper {
 
     void save(Borrow borrow);
 
-    Borrow getByEmailAndISBN(String email, String isbn);
+    Borrow getByEmailAndISBN(String email, String isbn, Integer id);
 
     void updateByEmailAndISBN(Borrow borrow);
 
-    void deleteByEmailAndISBN(String email, String isbn);
+    void deleteByEmailAndISBN(String email, String isbn, Integer id);
+
+
+    List<Borrow> selectByEmailAndISBN(String email, String isbn);
 }

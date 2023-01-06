@@ -13,4 +13,5 @@ public class Person {
     private String city;
     private String street;
     private String phone;
+    private boolean status;
 }

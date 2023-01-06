@@ -3,32 +3,41 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.springboot.mapper.BorrowMapper">
+    <select id="selectByEmailAndISBN" resultType="com.example.springboot.entity.Borrow">
+        select *
+        from borrow
+        where email = #{ email } and isbn = #{ isbn }
+    </select>
+
     <delete id="deleteByEmailAndISBN">
         delete from borrow
-        where email = #{ email } and isbn = #{ isbn }
+        where email = #{ email } and isbn = #{ isbn } and id = #{ id }
     </delete>
 
     <update id="updateByEmailAndISBN">
         update borrow
-        set isbn = #{ isbn }, uDate = #{ uDate }
-        where email = #{ email }
+        set notification = #{ notification }, bstatus = #{ bStatus }
+        where email = #{ email } and isbn = #{ isbn } and id = #{ id }
     </update>
 
     <insert id="save">
-        insert into borrow(isbn, email, cDate)
-        values (#{ isbn }, #{ email }, #{ cDate })
+        insert into borrow(isbn, email, cDate, duration, bstatus, rDate, id)
+        values (#{ isbn }, #{ email }, #{ cDate }, #{ duration }, #{ bStatus }, #{ rDate }, #{ id })
     </insert>
 
     <select id="listByCondition" resultType="com.example.springboot.entity.Borrow">
-        select b1.*, b2.name, b2.credit, p.username, p.phone
-        from borrow b1, book b2, person p
+        select b1.*, b2.name, b2.credit, p.username, p.phone, u.uid
+        from borrow b1, book b2, person p, user u
         <where>
-            b1.email = p.email and b1.isbn = b2.isbn
-            <if test="email != null and email != ''">
-                and b1.email like concat('%', #{ email }, '%')
+            b1.email = p.email and b1.isbn = b2.isbn and b1.email = u.email
+            <if test="username != null and username != ''">
+                and p.username like concat('%', #{ username }, '%')
             </if>
             <if test="isbn != null and isbn != ''">
                 and b1.isbn like concat('%', #{ isbn }, '%')
+            </if>
+            <if test="name != null and name != ''">
+                and b2.name like concat('%', #{ name }, '%')
             </if>
         </where>
         order by cDate desc
@@ -44,6 +53,6 @@
     <select id="getByEmailAndISBN" resultType="com.example.springboot.entity.Borrow">
         select b1.*, b2.name, b2.credit, p.username, p.phone, u.aCredit
         from borrow b1, book b2, person p, user u
-        where b1.email = p.email and b1.email = u.email and b1.isbn = b2.isbn and b1.email = #{ email } and b1.isbn = #{ isbn }
+        where b1.email = p.email and b1.email = u.email and b1.isbn = b2.isbn and b1.email = #{ email } and b1.isbn = #{ isbn } and b1.id = #{ id }
     </select>
 </mapper>

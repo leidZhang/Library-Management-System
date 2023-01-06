@@ -41,7 +41,6 @@
         </el-dialog>
       </div>
     </div>
-
     <!-- side and main -->
     <div style="display: flex">
       <!-- side -->
@@ -56,7 +55,7 @@
           <el-submenu index="user">
             <template slot="title">
               <i class="el-icon-user"></i>
-              <span style="font-family: Arial; font-size: 15px;">User Management</span>
+              <span style="font-family: Arial; font-size: 15px;">Users</span>
             </template>
             <el-menu-item index="/addUser">Add New User</el-menu-item>
             <el-menu-item index="/userList">User List</el-menu-item>
@@ -65,7 +64,7 @@
           <el-submenu index="admin">
             <template slot="title">
               <i class="el-icon-user-solid"></i>
-              <span style="font-family: Arial; font-size: 15px;">Admin Management</span>
+              <span style="font-family: Arial; font-size: 15px;">Administrators</span>
             </template>
             <el-menu-item index="/addAdmin">Add New Admin</el-menu-item>
             <el-menu-item index="/adminList">Admin List</el-menu-item>
@@ -83,7 +82,7 @@
           <el-submenu index="book">
             <template slot="title">
               <i class="el-icon-collection"></i>
-              <span style="font-family: Arial; font-size: 15px;">Book Management</span>
+              <span style="font-family: Arial; font-size: 15px;">Books</span>
             </template>
             <el-menu-item index="/addBook">Add New Book</el-menu-item>
             <el-menu-item index="/BookList">Book List</el-menu-item>
@@ -92,10 +91,18 @@
           <el-submenu index="borrow">
             <template slot="title">
               <i class="el-icon-download"></i>
-            <span style="font-family: Arial; font-size: 15px;">Borrow Management</span>
+            <span style="font-family: Arial; font-size: 15px;">Book Borrow</span>
           </template>
-          <el-menu-item index="/addBorrow">New Borrow</el-menu-item>
-          <el-menu-item index="/BorrowList">Borrow List</el-menu-item>
+          <el-menu-item index="/addBorrow">New Borrow Record</el-menu-item>
+          <el-menu-item index="/BorrowList">Borrow Records</el-menu-item>
+          </el-submenu>
+          <!-- return -->
+          <el-submenu index="retern">
+            <template slot="title">
+              <i class="el-icon-upload2"></i>
+              <span style="font-family: Arial; font-size: 15px;">Book Return</span>
+            </template>
+            <el-menu-item index="/ReternList">Return Records</el-menu-item>
           </el-submenu>
         </el-menu>
       </div>

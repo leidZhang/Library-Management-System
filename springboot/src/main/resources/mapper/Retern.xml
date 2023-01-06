@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.mapper.ReternMapper">
+    <select id="selectByEmailAndISBN" resultType="com.example.springboot.entity.Retern">
+        select *
+        from reterns
+        where email = #{ email } and isbn = #{ isbn }
+    </select>
+
+    <insert id="save">
+        insert into reterns(isbn, email, cDate, bStatus, duration, rDate, aDate, id)
+        values (#{ isbn }, #{ email }, #{ cDate }, #{ bStatus }, #{ duration }, #{ rDate }, #{ aDate }, #{ id })
+    </insert>
+
+    <delete id="deleteByEmailAndISBN">
+        delete from reterns
+        where email = #{ email } and isbn = #{ isbn }
+    </delete>
+
+    <select id="list" resultType="com.example.springboot.entity.Retern">
+        select r.*, b.name, p.username, p.phone
+        from reterns r, book b, person p
+        where r.email = p.email and r.isbn = b.isbn
+        order by cDate desc
+    </select>
+
+    <select id="listByCondition" resultType="com.example.springboot.entity.Retern">
+        select r.*, b.name, p.username, p.phone, u.uid
+        from reterns r, book b, person p, user u
+        <where>
+            r.email = p.email and r.isbn = b.isbn and r.email = u.email
+            <if test="username != null and username != ''">
+                and p.username like concat('%', #{ username }, '%')
+            </if>
+            <if test="isbn != null and isbn != ''">
+                and r.isbn like concat('%', #{ isbn }, '%')
+            </if>
+            <if test="name != null and name != ''">
+                and b.name like concat('%', #{ name }, '%')
+            </if>
+        </where>
+        order by cDate desc
+    </select>
+</mapper>

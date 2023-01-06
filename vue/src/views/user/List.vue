@@ -10,11 +10,20 @@
     <!-- table area -->
     <div>
       <el-table :data="tableData" style="width: 100%" stripe>
+        <el-table-column prop="status" label="Status" width="80">
+          <template v-slot="scope2">
+            <el-switch
+                v-model="scope2.row.status"
+                active-color="#13ce66"
+                inactive-color="#ff4949"
+                @change="changeStatus(scope2.row)">
+            </el-switch>
+          </template>
+        </el-table-column>
         <el-table-column prop="uid" label="User ID" show-overflow-tooltip width="130"></el-table-column>
         <el-table-column prop="username" label="Username" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="fname" label="First Name" width="100"></el-table-column>
         <el-table-column prop="lname" label="Last Name" width="100"></el-table-column>
-        <el-table-column prop="gender" label="Gender" width="80"></el-table-column>
         <el-table-column prop="age" label="Age" width="50"></el-table-column>
         <el-table-column prop="email" label="Email" show-overflow-tooltip width="150"></el-table-column>
         <el-table-column prop="phone" label="Phone" width="110"></el-table-column>
@@ -23,7 +32,8 @@
         <el-table-column prop="street" label="Street" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="ctime" label="Create Date" width="120"></el-table-column>
         <el-table-column prop="utime" label="Update Date" width="120"></el-table-column>
-        <el-table-column fixed="right" label="Operation" width="265">
+        <el-table-column prop="acredit" label="Score" width="70"></el-table-column>
+        <el-table-column fixed="right" label="Operations" width="265">
           <template v-slot="scope">
             <el-button type="success" @click="chargeOpen(scope.row)">Reharge</el-button>
             <el-button type="primary" style="margin-left: 2px;" @click="$router.push('/editUser?email=' + scope.row.email)">Edit</el-button>
@@ -37,7 +47,6 @@
             </el-popconfirm>
           </template>
         </el-table-column>
-        <el-table-column prop="acredit" label="Credit" width="70"></el-table-column>
       </el-table>
       <!-- charge up user account -->
       <el-dialog style="text-align: center" :visible.sync="dialogFormVisible">
@@ -198,7 +207,19 @@ export default {
           this.$notify.error(res.msg)
         }
       })
-    }
+    },
+
+    changeStatus(row) {
+      // console.log(row)
+      request.put('user/update', row).then(res => {
+        if(res.code === '200') {
+          this.$notify.success('Status updated')
+          this.load()
+        } else {
+          this.$notify.error(res.msg)
+        }
+      })
+    },
   }
 }
 </script>

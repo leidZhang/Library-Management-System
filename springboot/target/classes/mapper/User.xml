@@ -14,7 +14,7 @@
     <update id="updateByEmail">
         update person
         set fname = #{fname}, minit = #{minit}, lname = #{lname}, username = #{username}, province = #{province}, city = #{city},
-            street = #{street}, phone = #{phone}
+            street = #{street}, phone = #{phone}, status = #{ status }
         where email = #{email};
 
         update user

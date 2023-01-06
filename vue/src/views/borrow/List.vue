@@ -2,7 +2,8 @@
   <div>
     <!-- search area -->
     <div style="margin-bottom: 2px; margin-top: 2px">
-      <el-input v-model="params.email" placeholder="Enter user email" style="width: 200px; margin-left: 2px"></el-input>
+      <el-input v-model="params.username" placeholder="Enter username" style="width: 200px; margin-left: 2px"></el-input>
+      <el-input v-model="params.name" placeholder="Enter book's name" style="width: 200px; margin-left: 2px"></el-input>
       <el-input v-model="params.isbn" placeholder="Enter book's isbn" style="width: 200px; margin-left: 2px"></el-input>
       <el-button type="primary" style="margin-left: 2px; height: 40px" icon="el-icon-search" @click="load">Search</el-button>
       <el-button type="warning" style="margin-left: 2px; height: 40px" icon="el-icon-refresh-right" @click="reset">Reset</el-button>
@@ -10,18 +11,40 @@
     <!-- table area -->
     <div>
       <el-table :data="tableData" style="width: 100%" stripe>
-        <el-table-column prop="email" label="Email" show-overflow-tooltip ></el-table-column>
-        <el-table-column prop="username" label="User Name" ></el-table-column>
-        <el-table-column prop="phone" label="Phone" ></el-table-column>
-        <el-table-column prop="isbn" label="ISBN" ></el-table-column>
-        <el-table-column prop="name" label="Name" show-overflow-tooltip width="400"></el-table-column>
-        <el-table-column prop="credit" label="Credit"></el-table-column>
-        <el-table-column prop="cDate" label="Create Date" ></el-table-column>
-        <el-table-column fixed="right" label="Operation" >
+        <el-table-column prop="uid" label="User ID" show-overflow-tooltip width="150"></el-table-column>
+        <el-table-column prop="username" label="Username" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="phone" label="Phone" width="100"></el-table-column>
+        <el-table-column prop="name" label="Book Name" show-overflow-tooltip width="500"></el-table-column>
+        <el-table-column prop="isbn" label="ISBN" width="100"></el-table-column>
+        <el-table-column prop="bstatus" label="Status" width="80"></el-table-column>
+        <el-table-column prop="cdate" label="Borrow Date" width="110" :formatter="dateFormat1"></el-table-column>
+        <el-table-column prop="duration" label="Days" width="55"></el-table-column>
+        <el-table-column prop="rdate" label="Due Date" width="110" :formatter="dateFormat2"></el-table-column>
+        <el-table-column prop="notification" label="Notification">
+          <template v-slot="scope1">
+            <el-tag type="danger" v-if="scope1.row.notification === 'expired'">
+              {{ scope1.row.notification }}
+            </el-tag>
+            <el-tag type="primary" v-if="scope1.row.notification === 'about expire'">
+              {{ scope1.row.notification }}
+            </el-tag>
+            <el-tag type="warning" v-if="scope1.row.notification === 'at the due date'">
+              {{ scope1.row.notification }}
+            </el-tag>
+            <el-tag type="success" v-if="scope1.row.notification === 'unexpired'">
+              {{ scope1.row.notification }}
+            </el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column fixed="right" label="Management">
+          <template v-slot="scope2">
+            <el-button type="primary" style="margin-left: 2px;" @click="bookReturn(scope2.row)" v-if="scope2.row.bstatus === 'Borrowed'">
+              Return
+            </el-button>
+          </template>
+        </el-table-column>
+        <el-table-column fixed="right" label="Operation">
           <template v-slot="scope">
-            <!--<el-button type="primary" disabled @click="$router.push('/editBorrow?email=' + scope.row.email + '&isbn=' + scope.row.isbn)">
-              Edit
-            </el-button>-->
             <el-popconfirm
                 confirm-button-text='Yes'
                 cancel-button-text='No'
@@ -49,6 +72,7 @@
 
 <script>
 import request from "@/utils/request";
+import moment from "moment";
 
 export default {
   name: "List",
@@ -60,14 +84,16 @@ export default {
       params: {
         pageNum: 1,
         pageSize: 10,
-        email: '',
+        username: '',
         isbn: '',
+        name: ''
       },
     }
   },
 
   created() {
     this.load()
+    // console.log(moment("2023-01-05 23:12:22").format("YYYY-MM-DD"))
   },
 
   methods: {
@@ -85,8 +111,9 @@ export default {
     del(row) {
       const email = row.email
       const isbn = row.isbn
+      const id = row.id
 
-      request.delete('borrow/delete/' + email + '&' + isbn).then(res => {
+      request.delete('borrow/delete/' + email + '&' + isbn + '&' + id).then(res => {
         if(res.code === '200') {
           this.$notify.success('Deleted')
           this.load()
@@ -110,7 +137,26 @@ export default {
     changePageNum(pageNum) {
       this.params.pageNum = pageNum
       this.load()
-    }
+    },
+
+    bookReturn(row) {
+      // console.log(row)
+      request.post('/retern/save', row).then(res => {
+        if(res.code === '200') {
+          this.$notify.success('Book returned')
+          location.reload()
+        } else {
+          this.$notify.error(res.msg)
+        }
+      })
+    },
+
+    dateFormat1(row) {
+      return moment(row.cdate).format("YYYY-MM-DD") // a useful tool to format datetime
+    },
+    dateFormat2(row) {
+      return moment(row.rdate).format("YYYY-MM-DD")
+    },
   }
 }
 </script>
