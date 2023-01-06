@@ -11,7 +11,7 @@
  Target Server Version : 80030 (8.0.30)
  File Encoding         : 65001
 
- Date: 04/01/2023 19:38:12
+ Date: 06/01/2023 01:08:04
 */
 
 SET NAMES utf8mb4;
@@ -24,7 +24,6 @@ DROP TABLE IF EXISTS `admin`;
 CREATE TABLE `admin`  (
   `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `passwrd` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `status` tinyint(1) NULL DEFAULT 1,
   PRIMARY KEY (`email`) USING BTREE,
   CONSTRAINT `admin_ibfk_1` FOREIGN KEY (`email`) REFERENCES `person` (`email`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
@@ -32,9 +31,9 @@ CREATE TABLE `admin`  (
 -- ----------------------------
 -- Records of admin
 -- ----------------------------
-INSERT INTO `admin` VALUES ('admin02@libman.com', 'd4e01a749610b02ce7d27366a4008bfa', 1);
-INSERT INTO `admin` VALUES ('jasonliu88@libman.com', 'd4e01a749610b02ce7d27366a4008bfa', 1);
-INSERT INTO `admin` VALUES ('mlas028@libman.com', 'd4e01a749610b02ce7d27366a4008bfa', 0);
+INSERT INTO `admin` VALUES ('admin02@libman.com', 'd4e01a749610b02ce7d27366a4008bfa');
+INSERT INTO `admin` VALUES ('jasonliu88@libman.com', 'd4e01a749610b02ce7d27366a4008bfa');
+INSERT INTO `admin` VALUES ('mlas028@libman.com', 'd4e01a749610b02ce7d27366a4008bfa');
 
 -- ----------------------------
 -- Table structure for book
@@ -59,9 +58,9 @@ CREATE TABLE `book`  (
 -- ----------------------------
 -- Records of book
 -- ----------------------------
-INSERT INTO `book` VALUES ('0128203315', 'Computer Organization and Design RISC-V Edition: The Hardware Software Interface', 'Science > Computer Science', 'Computer Organization and Design RISC-V Edition: The Hardware Software Interface, Second Edition, the award-winning textbook from Patterson and Hennessy that is used by more than 40,000 students per year, continues to present the most comprehensive and readable introduction to this core computer science topic. ', '2020-12-31', ' David A. Patterson', 'Morgan Kaufmann', '2023-01-03 23:54:53', '2023-01-04 18:02:22', 'https://m.media-amazon.com/images/W/WEBP_402378-T2/images/I/51tRhoFUQ2L._SX405_BO1,204,203,200_.jpg', 10, 3);
-INSERT INTO `book` VALUES ('0131103628', 'C Programming Langeage', 'Science > Computer Science', 'Written by the developers of C, this new version helps readers keep up with the finalized ANSI standard for C while showing how to take advantage of C\'s rich set of operators, economy of expression, improved control flow, and data structures.', '1988-03-22', 'Brian W. Kernighan', 'Pearson', '2023-01-03 16:18:14', '2023-01-04 18:02:13', 'https://m.media-amazon.com/images/I/411ejyE8obL._SX377_BO1,204,203,200_.jpg', 10, 3);
-INSERT INTO `book` VALUES ('0133970779', 'Fundamentals of Database Systems', 'Science > Computer Science', 'This book introduces the fundamental concepts necessary for designing, using, and implementing database systems and database applications. Our presentation stresses the fundamentals of database modeling and design, the languages and models provided by the database management systems, and database system implementation techniques.', '2015-06-08', 'Ramez Elmasri', 'Pearson', '2023-01-03 16:06:46', '2023-01-04 18:02:18', 'https://m.media-amazon.com/images/I/51IBmkQUFuL._SX400_BO1,204,203,200_.jpg', 15, 3);
+INSERT INTO `book` VALUES ('0128203315', 'Computer Organization and Design RISC-V Edition: The Hardware Software Interface', 'Science > Computer Science', 'Computer Organization and Design RISC-V Edition: The Hardware Software Interface, Second Edition, the award-winning textbook from Patterson and Hennessy that is used by more than 40,000 students per year, continues to present the most comprehensive and readable introduction to this core computer science topic. ', '2020-12-31', ' David A. Patterson', 'Morgan Kaufmann', '2023-01-03 23:54:53', '2023-01-05 21:41:25', 'https://m.media-amazon.com/images/W/WEBP_402378-T2/images/I/51tRhoFUQ2L._SX405_BO1,204,203,200_.jpg', 10, 4);
+INSERT INTO `book` VALUES ('0131103628', 'C Programming Langeage', 'Science > Computer Science', 'Written by the developers of C, this new version helps readers keep up with the finalized ANSI standard for C while showing how to take advantage of C\'s rich set of operators, economy of expression, improved control flow, and data structures.', '1988-03-22', 'Brian W. Kernighan', 'Pearson', '2023-01-03 16:18:14', '2023-01-05 21:41:22', 'https://m.media-amazon.com/images/I/411ejyE8obL._SX377_BO1,204,203,200_.jpg', 10, 3);
+INSERT INTO `book` VALUES ('0133970779', 'Fundamentals of Database Systems', 'Science > Computer Science', 'This book introduces the fundamental concepts necessary for designing, using, and implementing database systems and database applications. Our presentation stresses the fundamentals of database modeling and design, the languages and models provided by the database management systems, and database system implementation techniques.', '2015-06-08', 'Ramez Elmasri', 'Pearson', '2023-01-03 16:06:46', '2023-01-04 18:02:18', 'https://m.media-amazon.com/images/I/51IBmkQUFuL._SX400_BO1,204,203,200_.jpg', 15, 2);
 
 -- ----------------------------
 -- Table structure for borrow
@@ -70,9 +69,13 @@ DROP TABLE IF EXISTS `borrow`;
 CREATE TABLE `borrow`  (
   `isbn` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `id` int NOT NULL DEFAULT 1,
   `cDate` datetime NULL DEFAULT CURRENT_TIMESTAMP,
-  `uDate` datetime NULL DEFAULT NULL,
-  PRIMARY KEY (`isbn`, `email`) USING BTREE,
+  `bstatus` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `duration` int NULL DEFAULT 1,
+  `rDate` datetime NULL DEFAULT NULL,
+  `notification` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`isbn`, `email`, `id`) USING BTREE,
   INDEX `email`(`email` ASC) USING BTREE,
   CONSTRAINT `borrow_ibfk_1` FOREIGN KEY (`isbn`) REFERENCES `book` (`isbn`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `borrow_ibfk_2` FOREIGN KEY (`email`) REFERENCES `user` (`email`) ON DELETE RESTRICT ON UPDATE RESTRICT
@@ -81,12 +84,23 @@ CREATE TABLE `borrow`  (
 -- ----------------------------
 -- Records of borrow
 -- ----------------------------
-INSERT INTO `borrow` VALUES ('0128203315', 'jande8654@outlook.com', '2023-01-04 18:02:40', NULL);
-INSERT INTO `borrow` VALUES ('0128203315', 'spacestarfish@outlook.com', '2023-01-04 17:59:00', NULL);
-INSERT INTO `borrow` VALUES ('0131103628', 'azelaya@yahoo.com', '2023-01-04 17:59:43', NULL);
-INSERT INTO `borrow` VALUES ('0131103628', 'fblorg@outlook.com', '2023-01-04 17:58:31', NULL);
-INSERT INTO `borrow` VALUES ('0133970779', 'jbs123@gmail.com', '2023-01-04 18:02:58', NULL);
-INSERT INTO `borrow` VALUES ('0133970779', 'kojitadokoro@gmail.com', '2023-01-04 17:59:28', NULL);
+INSERT INTO `borrow` VALUES ('0128203315', 'azelaya@yahoo.com', 1, '2023-01-05 23:12:22', 'Returned', 1, '2023-01-06 23:12:22', 'unexpired');
+INSERT INTO `borrow` VALUES ('0128203315', 'azelaya@yahoo.com', 2, '2023-01-06 00:02:04', 'Returned', 5, '2023-01-11 00:02:04', 'unexpired');
+INSERT INTO `borrow` VALUES ('0128203315', 'azelaya@yahoo.com', 3, '2023-01-06 00:03:20', 'Returned', 5, '2023-01-11 00:03:20', 'unexpired');
+INSERT INTO `borrow` VALUES ('0128203315', 'fblorg@outlook.com', 1, '2023-01-05 23:07:41', 'Returned', 1, '2023-01-06 23:07:41', 'unexpired');
+INSERT INTO `borrow` VALUES ('0128203315', 'jbs123@gmail.com', 1, '2023-01-06 00:09:35', 'Borrowed', 1, '2023-01-07 00:09:35', 'unexpired');
+INSERT INTO `borrow` VALUES ('0128203315', 'spacestarfish@outlook.com', 1, '2023-01-06 00:45:22', 'Returned', 5, '2023-01-11 00:45:22', 'unexpired');
+INSERT INTO `borrow` VALUES ('0131103628', 'fblorg@outlook.com', 1, '2023-01-05 23:56:17', 'Returned', 3, '2023-01-08 23:56:17', 'unexpired');
+INSERT INTO `borrow` VALUES ('0131103628', 'jande8654@outlook.com', 1, '2023-01-06 00:39:41', 'Returned', 1, '2023-01-07 00:39:41', 'unexpired');
+INSERT INTO `borrow` VALUES ('0131103628', 'jen2687@gmail.com', 1, '2023-01-05 23:56:28', 'Returned', 5, '2023-01-10 23:56:28', 'unexpired');
+INSERT INTO `borrow` VALUES ('0131103628', 'jen2687@gmail.com', 2, '2023-01-06 00:09:03', 'Borrowed', 5, '2023-01-11 00:09:03', 'unexpired');
+INSERT INTO `borrow` VALUES ('0131103628', 'linsmith@gmail.com', 1, '2023-01-05 23:57:22', 'Returned', 1, '2023-01-06 23:57:22', 'unexpired');
+INSERT INTO `borrow` VALUES ('0131103628', 'spacestarfish@outlook.com', 1, '2023-01-06 00:43:53', 'Returned', 1, '2023-01-07 00:43:53', 'unexpired');
+INSERT INTO `borrow` VALUES ('0131103628', 'wf2887@outlook.com', 1, '2023-01-06 00:49:21', 'Borrowed', 6, '2023-01-12 00:49:21', 'unexpired');
+INSERT INTO `borrow` VALUES ('0133970779', 'fblorg@outlook.com', 1, '2023-01-06 00:49:35', 'Borrowed', 3, '2023-01-09 00:49:35', 'unexpired');
+INSERT INTO `borrow` VALUES ('0133970779', 'jamesborg@gmail.com', 1, '2023-01-06 00:09:13', 'Borrowed', 3, '2023-01-09 00:09:13', 'unexpired');
+INSERT INTO `borrow` VALUES ('0133970779', 'jbs123@gmail.com', 1, '2023-01-05 23:56:38', 'Returned', 1, '2023-01-06 23:56:38', 'unexpired');
+INSERT INTO `borrow` VALUES ('0133970779', 'jwallace2598@outlook.com', 1, '2023-01-06 00:40:00', 'Borrowed', 1, '2023-01-07 00:40:00', 'unexpired');
 
 -- ----------------------------
 -- Table structure for category
@@ -132,27 +146,62 @@ CREATE TABLE `person`  (
   `city` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `street` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `phone` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `status` tinyint NULL DEFAULT 1,
   PRIMARY KEY (`email`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of person
 -- ----------------------------
-INSERT INTO `person` VALUES ('admin02@libman.com', 'Jennifer', 'L', 'Smith', 'admin02', 'QC', 'Quebec', '987 Sheild', '4269571397');
-INSERT INTO `person` VALUES ('azelaya@yahoo.com', 'Alicia', 'J', 'Zelaya', 'azelaya', 'TX', 'Spring', '3221 Castle', '4623587412');
-INSERT INTO `person` VALUES ('fblorg@outlook.com', 'Friend', 'C', 'Blorg', 'blorggg', 'ON', 'North York', '867 Skywood', '4236587412');
-INSERT INTO `person` VALUES ('jamesborg@gmail.com', 'James', 'E', 'Borg', 'jamborg', 'TX', 'Houston', '450 Stone', '4325874156');
-INSERT INTO `person` VALUES ('jande8654@outlook.com', 'Jane', 'C', 'Doe', 'jande865', 'ON', 'North York', '187 Sayview', '4358974156');
-INSERT INTO `person` VALUES ('jasonliu88@libman.com', 'Jason', 'M', 'Liu', 'jsonliu088', 'ON', 'Toronto', '166 Kings', '4563218974');
-INSERT INTO `person` VALUES ('jbs123@gmail.com', 'John', 'B', 'Smith', 'jbs123', 'TX', 'Houston', '731 Fondren', '4395210124');
-INSERT INTO `person` VALUES ('jen2687@gmail.com', 'Joyce', 'A', 'English', 'jen26687', 'TX', 'Houston', '5631 Dallas', '4598741256');
-INSERT INTO `person` VALUES ('jwallace2598@outlook.com', 'Jennifer', 'S', 'Wallace', 'jwallace85', 'TX', 'Ballaire', '291 Berry', '4632157894');
-INSERT INTO `person` VALUES ('kojitadokoro@gmail.com', 'Koji', 'M', 'Tadokoro', 'kojitada114514', 'ON', 'Mississauga', '123 Upwood', '4563281597');
-INSERT INTO `person` VALUES ('linsmith@gmail.com', 'Linda', NULL, 'Smith', 'linsmith028', 'ON', 'Toronto', '876 Prince', '4856321598');
-INSERT INTO `person` VALUES ('mlas028@libman.com', 'Mike', 'J', 'Laski', 'mlas028', 'NS', 'Halifax', '195 Centrewood', '4125637852');
-INSERT INTO `person` VALUES ('spacestarfish@outlook.com', 'Evil', 'S', 'Starfish', 'spacestarfish', 'NS', 'Halifax', '2333 Void', '4856321475');
-INSERT INTO `person` VALUES ('wf2887@outlook.com', 'Franklin', 'T', 'Wong', 'wf288c', 'TX', 'Houston', '638 Voss', '4381254789');
-INSERT INTO `person` VALUES ('yoshida124@yahoo.com', 'Hiroshi', 'V', 'Yoshida', 'hyoshida', 'ON', 'North York', '3001 Dinch', '6321478569');
+INSERT INTO `person` VALUES ('admin02@libman.com', 'Jennifer', 'L', 'Smith', 'admin02', 'QC', 'Quebec', '987 Sheild', '4269571397', 1);
+INSERT INTO `person` VALUES ('azelaya@yahoo.com', 'Alicia', 'J', 'Zelaya', 'azelaya', 'TX', 'Spring', '3221 Castle', '4623587412', 1);
+INSERT INTO `person` VALUES ('fblorg@outlook.com', 'Friend', 'C', 'Blorg', 'blorggg', 'ON', 'North York', '867 Skywood', '4236587412', 1);
+INSERT INTO `person` VALUES ('jamesborg@gmail.com', 'James', 'E', 'Borg', 'jamborg', 'TX', 'Houston', '450 Stone', '4325874156', 1);
+INSERT INTO `person` VALUES ('jande8654@outlook.com', 'Jane', 'C', 'Doe', 'jande865', 'ON', 'North York', '187 Sayview', '4358974156', 1);
+INSERT INTO `person` VALUES ('jasonliu88@libman.com', 'Jason', 'M', 'Liu', 'jsonliu088', 'ON', 'Toronto', '166 Kings', '4563218974', 1);
+INSERT INTO `person` VALUES ('jbs123@gmail.com', 'John', 'B', 'Smith', 'jbs123', 'TX', 'Houston', '731 Fondren', '4395210124', 1);
+INSERT INTO `person` VALUES ('jen2687@gmail.com', 'Joyce', 'A', 'English', 'jen26687', 'TX', 'Houston', '5631 Dallas', '4598741256', 1);
+INSERT INTO `person` VALUES ('jwallace2598@outlook.com', 'Jennifer', 'S', 'Wallace', 'jwallace85', 'TX', 'Ballaire', '291 Berry', '4632157894', 1);
+INSERT INTO `person` VALUES ('kojitadokoro@gmail.com', 'Koji', 'M', 'Tadokoro', 'kojitada114514', 'ON', 'Mississauga', '123 Upwood', '4563281597', 1);
+INSERT INTO `person` VALUES ('linsmith@gmail.com', 'Linda', 'Z', 'Smith', 'linsmith028', 'ON', 'Toronto', '876 Prince', '4856321598', 1);
+INSERT INTO `person` VALUES ('mlas028@libman.com', 'Mike', 'J', 'Laski', 'mlas028', 'NS', 'Halifax', '195 Centrewood', '4125637852', 0);
+INSERT INTO `person` VALUES ('spacestarfish@outlook.com', 'Evil', 'S', 'Starfish', 'spacestarfish', 'NS', 'Halifax', '2333 Void', '4856321475', 1);
+INSERT INTO `person` VALUES ('wf2887@outlook.com', 'Franklin', 'T', 'Wong', 'wf288c', 'TX', 'Houston', '638 Voss', '4381254789', 1);
+INSERT INTO `person` VALUES ('yoshida124@yahoo.com', 'Hiroshi', 'V', 'Yoshida', 'hyoshida', 'ON', 'North York', '3001 Dinch', '6321478569', 1);
+
+-- ----------------------------
+-- Table structure for reterns
+-- ----------------------------
+DROP TABLE IF EXISTS `reterns`;
+CREATE TABLE `reterns`  (
+  `isbn` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `id` int NOT NULL,
+  `cDate` datetime NULL DEFAULT CURRENT_TIMESTAMP,
+  `bstatus` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `duration` int NULL DEFAULT 1,
+  `rDate` datetime NULL DEFAULT NULL,
+  `aDate` datetime NULL DEFAULT NULL COMMENT 'actual return date',
+  PRIMARY KEY (`isbn`, `email`, `id`) USING BTREE,
+  INDEX `email`(`email` ASC) USING BTREE,
+  CONSTRAINT `reterns_ibfk_1` FOREIGN KEY (`isbn`) REFERENCES `book` (`isbn`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `reterns_ibfk_2` FOREIGN KEY (`email`) REFERENCES `user` (`email`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of reterns
+-- ----------------------------
+INSERT INTO `reterns` VALUES ('0128203315', 'azelaya@yahoo.com', 1, '2023-01-05 23:12:22', 'Returned', 1, '2023-01-06 23:12:22', '2023-01-05 23:35:53');
+INSERT INTO `reterns` VALUES ('0128203315', 'azelaya@yahoo.com', 2, '2023-01-06 00:02:04', 'Returned', 5, '2023-01-11 00:02:04', '2023-01-06 00:02:13');
+INSERT INTO `reterns` VALUES ('0128203315', 'azelaya@yahoo.com', 3, '2023-01-06 00:03:20', 'Returned', 5, '2023-01-11 00:03:20', '2023-01-06 00:03:24');
+INSERT INTO `reterns` VALUES ('0128203315', 'fblorg@outlook.com', 1, '2023-01-05 23:07:41', 'returned', 1, '2023-01-06 23:07:41', '2023-01-05 23:33:48');
+INSERT INTO `reterns` VALUES ('0128203315', 'spacestarfish@outlook.com', 1, '2023-01-06 00:45:22', 'Returned', 5, '2023-01-11 00:45:22', '2023-01-06 00:46:42');
+INSERT INTO `reterns` VALUES ('0131103628', 'fblorg@outlook.com', 1, '2023-01-05 23:56:17', 'Returned', 3, '2023-01-08 23:56:17', '2023-01-06 00:00:50');
+INSERT INTO `reterns` VALUES ('0131103628', 'jande8654@outlook.com', 1, '2023-01-06 00:39:41', 'Returned', 1, '2023-01-07 00:39:41', '2023-01-06 00:40:06');
+INSERT INTO `reterns` VALUES ('0131103628', 'jen2687@gmail.com', 1, '2023-01-05 23:56:28', 'Returned', 5, '2023-01-10 23:56:28', '2023-01-06 00:00:48');
+INSERT INTO `reterns` VALUES ('0131103628', 'linsmith@gmail.com', 1, '2023-01-05 23:57:22', 'Returned', 1, '2023-01-06 23:57:22', '2023-01-05 23:57:29');
+INSERT INTO `reterns` VALUES ('0131103628', 'spacestarfish@outlook.com', 1, '2023-01-06 00:43:53', 'Returned', 1, '2023-01-07 00:43:53', '2023-01-06 00:44:05');
+INSERT INTO `reterns` VALUES ('0133970779', 'jbs123@gmail.com', 1, '2023-01-05 23:56:38', 'Returned', 1, '2023-01-06 23:56:38', '2023-01-06 00:00:47');
 
 -- ----------------------------
 -- Table structure for user
@@ -173,17 +222,17 @@ CREATE TABLE `user`  (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('azelaya@yahoo.com', 'Female', 27, '20221224597193486', '2022-12-24 17:33:04', NULL, 490);
-INSERT INTO `user` VALUES ('fblorg@outlook.com', 'Other', 4, '20221224346174758', '2022-12-24 17:38:39', '2022-12-25 16:33:41', 490);
-INSERT INTO `user` VALUES ('jamesborg@gmail.com', 'Male', 45, '202212242055571912', '2022-12-24 17:36:58', NULL, 500);
-INSERT INTO `user` VALUES ('jande8654@outlook.com', 'Female', 23, '20221224564425856', '2022-12-24 17:39:53', NULL, 490);
-INSERT INTO `user` VALUES ('jbs123@gmail.com', 'Male', 33, '202212241946340529', '2022-12-24 17:30:11', NULL, 485);
-INSERT INTO `user` VALUES ('jen2687@gmail.com', 'Female', 25, '20221224723207108', '2022-12-24 17:36:14', NULL, 500);
-INSERT INTO `user` VALUES ('jwallace2598@outlook.com', 'Female', 36, '20221224679361579', '2022-12-24 17:34:57', NULL, 500);
-INSERT INTO `user` VALUES ('kojitadokoro@gmail.com', 'Male', 18, '20221224828600467', '2022-12-24 17:43:47', '2023-01-04 13:49:46', 485);
-INSERT INTO `user` VALUES ('linsmith@gmail.com', 'Unknown', 37, '202301041937374814', '2023-01-04 17:08:08', NULL, 500);
-INSERT INTO `user` VALUES ('spacestarfish@outlook.com', 'Other', 17, '20221225752851968', '2022-12-25 16:35:37', '2022-12-30 16:43:25', 490);
-INSERT INTO `user` VALUES ('wf2887@outlook.com', 'Male', 25, '202212241314368891', '2022-12-24 17:31:42', NULL, 500);
-INSERT INTO `user` VALUES ('yoshida124@yahoo.com', 'Male', 33, '202212241065002931', '2022-12-24 17:41:54', NULL, 500);
+INSERT INTO `user` VALUES ('azelaya@yahoo.com', 'Female', 27, '20221224597193486', '2022-12-24 17:33:04', '2023-01-06 00:06:50', 500);
+INSERT INTO `user` VALUES ('fblorg@outlook.com', 'Other', 4, '20221224346174758', '2022-12-24 17:38:39', '2023-01-06 00:06:48', 435);
+INSERT INTO `user` VALUES ('jamesborg@gmail.com', 'Male', 45, '202212242055571912', '2022-12-24 17:36:58', '2023-01-06 00:06:48', 455);
+INSERT INTO `user` VALUES ('jande8654@outlook.com', 'Female', 23, '20221224564425856', '2022-12-24 17:39:53', '2023-01-06 00:06:48', 500);
+INSERT INTO `user` VALUES ('jbs123@gmail.com', 'Male', 33, '202212241946340529', '2022-12-24 17:30:11', '2023-01-06 00:06:53', 475);
+INSERT INTO `user` VALUES ('jen2687@gmail.com', 'Female', 25, '20221224723207108', '2022-12-24 17:36:14', '2023-01-06 00:06:49', 440);
+INSERT INTO `user` VALUES ('jwallace2598@outlook.com', 'Female', 36, '20221224679361579', '2022-12-24 17:34:57', '2023-01-06 00:06:50', 485);
+INSERT INTO `user` VALUES ('kojitadokoro@gmail.com', 'Male', 18, '20221224828600467', '2022-12-24 17:43:47', '2023-01-06 00:06:47', 485);
+INSERT INTO `user` VALUES ('linsmith@gmail.com', 'Unknown', 37, '202301041937374814', '2023-01-04 17:08:08', '2023-01-06 00:06:46', 500);
+INSERT INTO `user` VALUES ('spacestarfish@outlook.com', 'Other', 17, '20221225752851968', '2022-12-25 16:35:37', '2023-01-06 00:06:46', 500);
+INSERT INTO `user` VALUES ('wf2887@outlook.com', 'Male', 25, '202212241314368891', '2022-12-24 17:31:42', '2023-01-06 00:06:52', 440);
+INSERT INTO `user` VALUES ('yoshida124@yahoo.com', 'Male', 33, '202212241065002931', '2022-12-24 17:41:54', '2023-01-06 00:06:47', 500);
 
 SET FOREIGN_KEY_CHECKS = 1;
