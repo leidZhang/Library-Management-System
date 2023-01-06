@@ -17,9 +17,9 @@
         <el-table-column prop="name" label="Book Name" show-overflow-tooltip width="500"></el-table-column>
         <el-table-column prop="isbn" label="ISBN" width="100"></el-table-column>
         <el-table-column prop="bstatus" label="Status" width="80"></el-table-column>
-        <el-table-column prop="cdate" label="Borrow Date" width="110" :formatter="dateFormat1"></el-table-column>
+        <el-table-column prop="cdate" label="Borrow Date" width="110" :formatter="createDateFormat"></el-table-column>
         <el-table-column prop="duration" label="Days" width="55"></el-table-column>
-        <el-table-column prop="rdate" label="Due Date" width="110" :formatter="dateFormat2"></el-table-column>
+        <el-table-column prop="rdate" label="Due Date" width="110" :formatter="dueDateFormat"></el-table-column>
         <el-table-column prop="notification" label="Notification">
           <template v-slot="scope1">
             <el-tag type="danger" v-if="scope1.row.notification === 'expired'">
@@ -151,10 +151,10 @@ export default {
       })
     },
 
-    dateFormat1(row) {
+    createDateFormat(row) {
       return moment(row.cdate).format("YYYY-MM-DD") // a useful tool to format datetime
     },
-    dateFormat2(row) {
+    dueDateFormat(row) {
       return moment(row.rdate).format("YYYY-MM-DD")
     },
   }

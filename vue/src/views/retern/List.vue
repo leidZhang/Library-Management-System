@@ -17,10 +17,10 @@
         <el-table-column prop="name" label="Book Name" show-overflow-tooltip width="450"></el-table-column>
         <el-table-column prop="isbn" label="ISBN" width="100"></el-table-column>
         <el-table-column prop="bstatus" label="Status" width="100"></el-table-column>
-        <el-table-column prop="cdate" label="Borrow Date" width="120" :formatter="dateFormat1"></el-table-column>
+        <el-table-column prop="cdate" label="Borrow Date" width="120" :formatter="createDateFormat"></el-table-column>
         <el-table-column prop="duration" label="Days" width="100"></el-table-column>
-        <el-table-column prop="rdate" label="Due Date" width="100" :formatter="dateFormat2"></el-table-column>
-        <el-table-column prop="adate" label="Return Date" width="180" :formatter="dateFormat3"></el-table-column>
+        <el-table-column prop="rdate" label="Due Date" width="100" :formatter="dueDateFormat"></el-table-column>
+        <el-table-column prop="adate" label="Return Date" width="180" :formatter="returnDateFormat"></el-table-column>
         <el-table-column fixed="right" label="Operations">
           <template v-slot="scope">
             <el-popconfirm
@@ -115,14 +115,14 @@ export default {
       this.load()
     },
 
-    dateFormat1(row) {
+    createDateFormat(row) {
       return moment(row.cdate).format("YYYY-MM-DD") // a useful tool to format datetime
     },
-    dateFormat2(row) {
+    dueDateFormat(row) {
       return moment(row.rdate).format("YYYY-MM-DD")
     },
-    dateFormat3(row) {
-      return moment(row.adate).format("YYYY-MM-DD") // a useful tool to format datetime
+    returnDateFormat(row) {
+      return moment(row.adate).format("YYYY-MM-DD")
     },
   }
 }
