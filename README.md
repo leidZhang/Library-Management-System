@@ -1,5 +1,5 @@
 ## Purpose
-This is an exercise project, the goal is to get familiar with vue and spring boot by building a library management system.
+This is an exercise project, the goal is to get familiar with vue and spring-boot by building a library management system.
 ## Brief Introduction
 This library management system can divide into the following modules: login module, book module, category module, user module, administrator module, borrowing module, returning module, and line chart module. 
 ## Functions of the System
