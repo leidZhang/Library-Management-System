@@ -2,7 +2,7 @@
   <div style="padding: 10px;">
     <!-- date range selector -->
     <div>
-      <el-select v-model="form.dateRange" placeholder="Select date range">
+      <el-select v-model="form.dateRange" placeholder="Select date range" @change="load">
         <el-option
             v-for="item in range"
             :key="item.value"
@@ -115,7 +115,9 @@ export default {
         option.series[1].data = res.data.reterns // get return data
         this.lineBox.setOption(option) // generate line chart
       })
-    }
+    },
+
+
   }
 }
 </script>
