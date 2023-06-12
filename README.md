@@ -26,7 +26,7 @@ git clone https://github.com/yourname/library-management-system.git
 cd library-management-system  
 npm install
 ```
-3. Run mvn spring-boot:run to start the Spring Boot server. You should see a message like this:   
+3. Run `mvn spring-boot:run` to start the Spring Boot server. You should see a message like this:   
 ```
 Started LibraryManagementSystemApplication in 12.345 seconds (JVM running for 13.456)
 ```
